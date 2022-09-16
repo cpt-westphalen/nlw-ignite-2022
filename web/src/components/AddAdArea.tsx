@@ -1,6 +1,17 @@
+import React, { MouseEventHandler } from "react";
 import MagnifyingGlassPlus from "../assets/MagnifyingGlassPlus.svg";
 
-export const AddAdArea = () => {
+interface AddAdAreaProps {
+	setModalOpen: (arg: boolean) => void;
+}
+
+export const AddAdArea = ({ setModalOpen }: AddAdAreaProps) => {
+	const handleClickCreateAdModalOpen = (
+		event: React.MouseEvent<HTMLElement>
+	) => {
+		setModalOpen(true);
+	};
+
 	return (
 		<div className='flex flex-row w-[1200px] bg-[#2A2634] m-8 rounded-lg box-border bg-cover bg-clip-content-box bg-origin-border bg-gradient-theme-border border-t-4 border-solid border-t-transparent'>
 			<div className='flex-1 my-8 ml-8'>
@@ -10,7 +21,9 @@ export const AddAdArea = () => {
 				</p>
 			</div>
 			<div className='flex flex-grow-0 flex-shrink-0 basis-[190px] my-8 mr-8'>
-				<button className='flex items-center justify-center gap-2 p-3 bg-violet-500 rounded-md hover:bg-violet-600'>
+				<button
+					className='flex items-center justify-center gap-2 p-3 bg-violet-500 rounded-md hover:bg-violet-600'
+					onClick={handleClickCreateAdModalOpen}>
 					<img
 						src={MagnifyingGlassPlus}
 						alt=''
