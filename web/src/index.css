@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-clip-content-box {
+	background-clip: content-box, border-box;
+}
