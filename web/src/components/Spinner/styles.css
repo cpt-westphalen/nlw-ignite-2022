@@ -1,0 +1,15 @@
+.loading-spinner {
+	border: 2px solid #dddddd;
+	border-left-color: rgba(200, 200, 200, 0.1);
+	animation: 1.5s ease-out infinite spinner;
+	margin: 50px;
+}
+
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

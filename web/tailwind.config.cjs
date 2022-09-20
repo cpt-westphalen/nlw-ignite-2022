@@ -13,12 +13,15 @@ module.exports = {
         "gradient-theme-border": "linear-gradient(to top, #2A2634, #2A2634),linear-gradient(90deg, #9572FC 20%, #43E7AD 60%, #E1D55D)"
       },
       fontFamily: {
-        inter: ['Inter', 'sans-serif']
+        inter: ['Inter', 'sans-serif'],
+        roboto: ['Roboto', 'sans-serif']
       },
       letterSpacing: {
         'tracking-xsm': '-0.02rem'
+      },
+      borderRadius: {
+        '50': '50%'
       }
-      
     },
   },
   plugins: [],

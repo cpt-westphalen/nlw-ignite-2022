@@ -1,4 +1,3 @@
-import React, { MouseEventHandler } from "react";
 import MagnifyingGlassPlus from "../assets/MagnifyingGlassPlus.svg";
 
 interface AddAdAreaProps {

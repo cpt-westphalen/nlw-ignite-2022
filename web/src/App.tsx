@@ -5,6 +5,7 @@ import { AddAdArea } from "./components/AddAdArea";
 import { useEffect, useState } from "react";
 import { Game } from "./types";
 import { AddAdModal } from "./components/AddAdModal";
+import { Spinner } from "./components/Spinner";
 
 function App() {
 	const [modalOpen, setModalOpen] = useState(false);
@@ -15,26 +16,31 @@ function App() {
 			//this would be the external fetch
 			setTimeout(() => {
 				setGameList(mockList);
-			}, 500);
+			}, 1500);
 		};
 		fetchGameList();
 	}, []);
 
 	return (
-		<main className='bg-galaxy bg-cover min-h-screen flex flex-col justify-center items-center font-inter'>
+		<div className='bg-galaxy bg-cover min-h-screen flex flex-col justify-center items-center font-inter'>
 			<div className='max-w-[1344px] flex flex-col items-center'>
 				<Logo />
 				<Heading />
 
-				{gameList ? (
+				{gameList.length > 0 ? (
 					<GameList list={gameList} />
 				) : (
-					"Carregando lista de jogos..."
+					<Spinner />
 				)}
 				<AddAdArea setModalOpen={setModalOpen} />
 			</div>
-			{modalOpen && <AddAdModal setModalOpen={setModalOpen} />}
-		</main>
+			{modalOpen && (
+				<AddAdModal
+					modalOpen={modalOpen}
+					setModalOpen={setModalOpen}
+				/>
+			)}
+		</div>
 	);
 }
 
