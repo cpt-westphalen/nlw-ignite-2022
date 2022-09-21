@@ -1,0 +1,6 @@
+.select-item {
+	@apply text-sm text-white rounded flex items-center h-6 relative py-5;
+}
+.select-item[data-disabled] {
+	@apply text-zinc-500;
+}

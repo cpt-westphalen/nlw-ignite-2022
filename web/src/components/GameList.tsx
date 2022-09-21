@@ -1,8 +1,8 @@
 import { GameCard } from "./GameCard";
-import { GameListProps } from "../types";
+import { Game } from "../types";
 import { ArrowButton } from "./ArrowButton";
 
-export const GameList = ({ list }: GameListProps) => {
+export const GameList = ({ list }: { list: Game[] }) => {
 	return (
 		<div className='flex gap-6'>
 			<ArrowButton direction='left' />

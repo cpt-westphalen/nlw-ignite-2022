@@ -1,11 +1,3 @@
-interface GameListProps {
-    list: Array<Game>
-}
-
-interface GameProps {
-    game: Game
-  }
-  
 interface Game {
     id: string,
     imgUrl: string,
@@ -13,4 +5,22 @@ interface Game {
     ads: number
 }
 
-export type { GameListProps, GameProps, Game }
+interface AdTypes {
+    id: string;
+	game: string;
+	author: string;
+	experience: number;
+	contact: string;
+	days: number[];
+	time: number;
+	voice: boolean;
+}
+
+interface AddAdModalProps {
+	modalOpen: boolean;
+	setModalOpen: (arg: boolean) => void;
+	list: Game[];
+}
+
+
+export type { Game, AdTypes, AddAdModalProps }

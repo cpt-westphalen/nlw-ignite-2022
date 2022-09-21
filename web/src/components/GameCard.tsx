@@ -1,6 +1,6 @@
-import { GameProps } from "../types";
+import { Game } from "../types";
 
-export const GameCard = ({ game }: GameProps) => {
+export const GameCard = ({ game }: { game: Game }) => {
 	return (
 		<div className='w-[180px] h-[240px] relative rounded-lg overflow-hidden group'>
 			<img

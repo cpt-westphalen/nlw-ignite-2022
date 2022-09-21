@@ -1,7 +1,20 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { BsJoystick } from "react-icons/bs";
 
-export const AdFormInput = () => {
-	const focusElement = useRef<HTMLInputElement>(null);
+import { GameSelector } from "./GameSelector";
+
+import { AdTypes, Game } from "../types";
+
+export const AdFormInput = ({ list }: { list: Game[] }) => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<AdTypes>();
+	const focusElement = useRef<HTMLSelectElement>(null);
+
+	const onSubmit: SubmitHandler<AdTypes> = (data) => console.log(data);
 
 	useEffect(() => {
 		if (focusElement.current) focusElement.current.focus();
@@ -12,6 +25,7 @@ export const AdFormInput = () => {
 
 	return (
 		<form
+			onSubmit={handleSubmit(onSubmit)}
 			action=''
 			method='post'
 			name='adInput'
@@ -19,13 +33,15 @@ export const AdFormInput = () => {
 			className='flex flex-col gap-3 font-medium'>
 			<label className='flex flex-col gap-1 font-semibold text-base mb-2'>
 				Qual o game?
-				<input
-					type='selector'
-					name='game'
-					id='adGameInput'
-					placeholder='Selecione o game que deseja jogar'
-					ref={focusElement}
-				/>
+				<GameSelector.Root>
+					<GameSelector.Trigger className='flex items-center justify-start gap-5 bg-zinc-900'>
+						<GameSelector.Icon>
+							<BsJoystick size={16} />
+						</GameSelector.Icon>
+						<GameSelector.Value placeholder='Selecione o jogo' />
+					</GameSelector.Trigger>
+					<GameSelector.Content list={list} />
+				</GameSelector.Root>
 			</label>
 			<label className='flex flex-col gap-1 font-semibold text-base mb-2'>
 				Seu nome (ou nickname)
@@ -126,10 +142,9 @@ export const AdFormInput = () => {
 				<label className='flex flex-col gap-1 font-semibold text-base mb-2'>
 					Qual horário do dia?
 					<input
-						type='text'
+						type='time'
 						name='discord'
 						id='adDiscordInput'
-						placeholder='username#0000'
 					/>
 				</label>
 			</div>
@@ -144,3 +159,15 @@ export const AdFormInput = () => {
 		</form>
 	);
 };
+
+const uncontrolledSelector = (
+	<select
+		name='game'
+		id='adGameInput'
+		placeholder='Selecione o game que deseja jogar'>
+		<option>League of Legends</option>
+		<option>Dota 2</option>
+		<option>CS:GO</option>
+		<option>Apex Legends</option>
+	</select>
+);

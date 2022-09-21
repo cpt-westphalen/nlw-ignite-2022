@@ -1,11 +1,15 @@
-import logo from "./assets/logo.svg";
-import { GameList } from "./components/GameList";
-import { mockList } from "./mockList";
-import { AddAdArea } from "./components/AddAdArea";
 import { useEffect, useState } from "react";
-import { Game } from "./types";
+
+import logo from "./assets/logo.svg";
+
+import { GameList } from "./components/GameList";
+import { AddAdArea } from "./components/AddAdArea";
 import { AddAdModal } from "./components/AddAdModal";
 import { Spinner } from "./components/Spinner";
+
+import { Game } from "./types";
+
+import { mockList } from "./mockList";
 
 function App() {
 	const [modalOpen, setModalOpen] = useState(false);
@@ -38,6 +42,7 @@ function App() {
 				<AddAdModal
 					modalOpen={modalOpen}
 					setModalOpen={setModalOpen}
+					list={gameList}
 				/>
 			)}
 		</div>

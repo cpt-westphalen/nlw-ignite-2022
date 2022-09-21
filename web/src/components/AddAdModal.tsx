@@ -1,14 +1,12 @@
-import { RefObject, useEffect, useRef } from "react";
 import { AdFormInput } from "./AdFormInput";
 import { TbDeviceGamepad2 } from "react-icons/tb";
+import { AddAdModalProps } from "../types";
 
 export const AddAdModal = ({
 	modalOpen,
 	setModalOpen,
-}: {
-	modalOpen: boolean;
-	setModalOpen: (arg: boolean) => void;
-}) => {
+	list,
+}: AddAdModalProps) => {
 	function closeModal() {
 		setModalOpen(false);
 	}
@@ -16,16 +14,21 @@ export const AddAdModal = ({
 	return (
 		<div
 			tabIndex={-1}
-			aria-dialog
 			onClick={closeModal}
 			className='bg-black bg-opacity-90 fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col justify-center items-center'>
-			<section
+			<div
+				role='dialog'
+				aria-labelledby='modalTitle'
+				className='z-10 px-10 py-8 bg-[#2A2634] rounded-lg flex flex-col max-w-2xl gap-8'
 				onClick={(e) => {
 					e.stopPropagation();
-				}}
-				className='z-10 px-10 py-8 bg-[#2A2634] rounded-lg flex flex-col max-w-2xl gap-8'>
-				<h2 className='font-black text-4xl'>Publique um anúncio</h2>
-				<AdFormInput />
+				}}>
+				<h2
+					className='font-black text-4xl'
+					id='modalTitle'>
+					Publique um anúncio
+				</h2>
+				<AdFormInput list={list} />
 				<div className='flex justify-end items-center gap-8'>
 					<button
 						className='hover:text-zinc-400'
@@ -40,7 +43,7 @@ export const AddAdModal = ({
 						Encontrar duo
 					</button>
 				</div>
-			</section>
+			</div>
 		</div>
 	);
 };
