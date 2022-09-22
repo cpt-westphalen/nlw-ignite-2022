@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-clip-content-box {
+	background-clip: content-box, border-box;
+}
+
+input {
+	@apply bg-zinc-900 p-3 text-sm font-normal font-roboto text-white rounded placeholder:text-zinc-600;
+}
+
+button {
+	@apply py-3 px-4 font-semibold text-base rounded-md;
+}
