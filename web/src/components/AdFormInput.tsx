@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+
 import { BsJoystick } from "react-icons/bs";
+import { FaAngleDown } from "react-icons/fa";
 
 import { GameSelector } from "./GameSelector";
 
@@ -39,6 +41,9 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 							<BsJoystick size={16} />
 						</GameSelector.Icon>
 						<GameSelector.Value placeholder='Selecione o jogo' />
+						<GameSelector.Icon className='ml-auto'>
+							<FaAngleDown size={16} />
+						</GameSelector.Icon>
 					</GameSelector.Trigger>
 					<GameSelector.Content list={list} />
 				</GameSelector.Root>
