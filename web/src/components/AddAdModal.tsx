@@ -21,7 +21,7 @@ export const AddAdModal = ({
 			<div
 				role='dialog'
 				aria-labelledby='modalTitle'
-				className='z-10 px-10 py-8 bg-[#2A2634] rounded-lg flex flex-col max-w-2xl gap-8'
+				className='z-10 px-10 py-8 bg-[#2A2634] rounded-lg flex flex-col max-w-2xl gap-8 select-none'
 				onClick={(e) => {
 					e.stopPropagation();
 				}}>

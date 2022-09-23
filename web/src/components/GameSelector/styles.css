@@ -1,5 +1,5 @@
 .select-item {
-	@apply text-base text-white rounded flex items-center h-6 relative py-5 px-2 bg-zinc-800 gap-5;
+	@apply text-base text-white rounded flex items-center h-6 py-5 px-2 gap-6;
 }
 .select-item[data-disabled] {
 	@apply text-zinc-500;
