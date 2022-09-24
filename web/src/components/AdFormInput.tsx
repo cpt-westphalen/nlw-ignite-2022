@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
 import { BsJoystick } from "react-icons/bs";
 import { FaAngleDown } from "react-icons/fa";
@@ -9,16 +9,32 @@ import { DayButton } from "./DayButton";
 
 import { AdTypes, Game } from "../types";
 
+const defaultFormValues: AdTypes = {
+	id: "",
+	author: "",
+	contact: "",
+	game: "",
+	experience: 0,
+	time: { start: "", end: "" },
+	days: [0, 0, 0, 0, 0, 0, 0],
+	voice: false,
+};
+
 export const AdFormInput = ({ list }: { list: Game[] }) => {
 	const {
 		register,
 		handleSubmit,
 		setValue,
+		control,
 		formState: { errors },
-	} = useForm<AdTypes>();
+	} = useForm<AdTypes>({ defaultValues: defaultFormValues });
 
-	const onSubmit: SubmitHandler<AdTypes> = (data) => {
-		console.log(data);
+	const onSubmit: SubmitHandler<AdTypes> = (data: AdTypes) => {
+		const output = {
+			...data,
+			id: Math.floor(Math.random() * 100),
+		};
+		console.log(output);
 	};
 
 	const focusElement = useRef<HTMLSelectElement>(null);
@@ -39,24 +55,44 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 
 	return (
 		<form
-			onSubmit={handleSubmit(onSubmit)}
+			onSubmit={handleSubmit(onSubmit, (e) => {
+				console.log(e);
+			})}
 			name='adInput'
 			id='adFormInput'
 			className='flex flex-col gap-3 font-medium'>
 			<label className='flex flex-col gap-1 font-semibold text-base mb-2'>
 				Qual o game?
-				<GameSelector.Root>
-					<GameSelector.Trigger className='flex items-center justify-start gap-5 bg-zinc-900'>
-						<GameSelector.Icon>
-							<BsJoystick size={16} />
-						</GameSelector.Icon>
-						<GameSelector.Value placeholder='Selecione o jogo' />
-						<GameSelector.Icon className='ml-auto'>
-							<FaAngleDown size={16} />
-						</GameSelector.Icon>
-					</GameSelector.Trigger>
-					<GameSelector.Content list={list} />
-				</GameSelector.Root>
+				<Controller
+					name='game'
+					control={control}
+					rules={{ required: true }}
+					render={({
+						field: { name, ref, value, onChange, onBlur },
+					}) => (
+						<GameSelector.Root
+							name={name}
+							onValueChange={onChange}>
+							<GameSelector.Trigger
+								onBlur={onBlur}
+								id='gameSelect'
+								className='flex items-center justify-start gap-5 bg-zinc-900'>
+								<GameSelector.Icon>
+									<BsJoystick size={16} />
+								</GameSelector.Icon>
+								<GameSelector.Value
+									placeholder='Selecione o jogo'
+									ref={ref}
+									defaultValue={value}
+								/>
+								<GameSelector.Icon className='ml-auto'>
+									<FaAngleDown size={16} />
+								</GameSelector.Icon>
+							</GameSelector.Trigger>
+							<GameSelector.Content list={list} />
+						</GameSelector.Root>
+					)}
+				/>
 			</label>
 			<label className='flex flex-col gap-1 font-semibold text-base mb-2'>
 				Seu nome (ou nickname)
@@ -88,7 +124,9 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 					<input
 						type='text'
 						placeholder='username#0000'
-						{...register("contact", { required: true })}
+						{...register("contact", {
+							required: "Por favor, informe seu contato",
+						})}
 					/>
 				</label>
 			</div>
@@ -138,15 +176,15 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 					<div className='flex items-start gap-1'>
 						<input
 							type='time'
-							name='timeStart'
 							placeholder='De:'
 							className='m-0 p-2 text-sm'
+							{...register("time.start")}
 						/>
 						<input
 							type='time'
-							name='timeEnd'
 							placeholder='Até:'
 							className='m-0 p-2 text-sm'
+							{...register("time.end")}
 						/>
 					</div>
 				</label>
@@ -158,6 +196,20 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 				/>{" "}
 				Costumo me conectar ao chat de voz
 			</label>
+			{(errors.game && (
+				<p
+					role='alert'
+					className='text-xs text-red-500 text-center'>
+					Por favor, informe um jogo.
+				</p>
+			)) ||
+				(errors.contact && (
+					<p
+						role='alert'
+						className='text-xs text-red-500 text-center'>
+						Por favor, informe um contato.
+					</p>
+				))}
 		</form>
 	);
 };

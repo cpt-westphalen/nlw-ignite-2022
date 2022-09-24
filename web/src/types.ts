@@ -12,7 +12,7 @@ interface AdTypes {
 	experience: number;
 	contact: string;
 	days: number[];
-	time: number;
+	time: {start: string, end: string};
 	voice: boolean;
 }
 
