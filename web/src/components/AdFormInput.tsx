@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import {
+	useForm,
+	SubmitHandler,
+	Controller,
+	FieldErrorsImpl,
+} from "react-hook-form";
 
 import { BsJoystick } from "react-icons/bs";
 import { FaAngleDown } from "react-icons/fa";
@@ -27,13 +32,14 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 		setValue,
 		control,
 		formState: { errors },
-	} = useForm<AdTypes>({ defaultValues: defaultFormValues });
+	} = useForm<AdTypes>();
 
 	const onSubmit: SubmitHandler<AdTypes> = (data: AdTypes) => {
 		const output = {
 			...data,
 			id: Math.floor(Math.random() * 100),
 		};
+		if (!output.experience) output.experience = 0;
 		console.log(output);
 	};
 
@@ -66,10 +72,8 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 				<Controller
 					name='game'
 					control={control}
-					rules={{ required: true }}
-					render={({
-						field: { name, ref, value, onChange, onBlur },
-					}) => (
+					rules={{ required: "É necessário informar um jogo." }}
+					render={({ field: { name, ref, onChange, onBlur } }) => (
 						<GameSelector.Root
 							name={name}
 							onValueChange={onChange}>
@@ -83,7 +87,6 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 								<GameSelector.Value
 									placeholder='Selecione o jogo'
 									ref={ref}
-									defaultValue={value}
 								/>
 								<GameSelector.Icon className='ml-auto'>
 									<FaAngleDown size={16} />
@@ -99,7 +102,14 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 				<input
 					type='text'
 					placeholder='Como te chamam dentro do game?'
-					{...register("author")}
+					{...register("author", {
+						required: "Informe um nome.",
+						pattern: {
+							value: /[A-Za-z_\d]/,
+							message:
+								"Revise o nome digitado. Use letras, números e _",
+						},
+					})}
 				/>
 			</label>
 			<div className='flex gap-6'>
@@ -196,21 +206,50 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 				/>{" "}
 				Costumo me conectar ao chat de voz
 			</label>
-			{(errors.game && (
+			<Errors errors={errors} />
+		</form>
+	);
+};
+
+const Errors = ({ errors }: { errors: FieldErrorsImpl<AdTypes> }) => {
+	const errorStrings: () => string[] = () => {
+		const errorsFound = Object.getOwnPropertyNames(errors);
+
+		if (errorsFound.length > 1)
+			return errorsFound.map((value) => {
+				if (value === "game") return "jogo";
+				if (value === "author") return "nome";
+				if (value === "contact") return "discord";
+				else return value;
+			});
+
+		return [];
+	};
+
+	return (
+		<div>
+			{(Object.getOwnPropertyNames(errors).length > 1 && (
 				<p
 					role='alert'
 					className='text-xs text-red-500 text-center'>
-					Por favor, informe um jogo.
+					{`Preencha os campos: ${
+						errorStrings() && errorStrings().join(", ")
+					}`}
 				</p>
 			)) ||
-				(errors.contact && (
+				(Object.getOwnPropertyNames(errors).length == 1 && (
 					<p
 						role='alert'
 						className='text-xs text-red-500 text-center'>
-						Por favor, informe um contato.
+						{`${
+							errors.game?.message ||
+							errors.author?.message ||
+							errors.contact?.message
+						}`}
 					</p>
-				))}
-		</form>
+				)) ||
+				""}
+		</div>
 	);
 };
 
