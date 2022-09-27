@@ -129,7 +129,7 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 						})}
 					/>
 				</label>
-				<label className='flex flex-col gap-1 font-semibold text-base mb-2'>
+				<label className='flex flex-col gap-1 font-semibold text-base mb-2 flex-1'>
 					Qual seu discord?
 					<input
 						type='text'
