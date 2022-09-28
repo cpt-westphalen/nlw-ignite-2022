@@ -2,7 +2,7 @@ import { Game } from "../types";
 
 export const GameCard = ({ game }: { game: Game }) => {
 	return (
-		<div className='w-[180px] h-[240px] relative rounded-lg overflow-hidden group'>
+		<div className='w-[180px] h-[240px] relative rounded-lg overflow-hidden group border-solid border-2s border-zinc-900'>
 			<img
 				src={game.imgUrl}
 				alt='Game cover'
