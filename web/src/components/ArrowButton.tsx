@@ -21,7 +21,9 @@ export const ArrowButton = ({
 		<button
 			className='bg-transparent hover:bg-zinc-900 hover:bg-transparent group'
 			onClick={onClick}
-			disabled={disabled || false}>
+			disabled={disabled || false}
+			aria-hidden
+			tabIndex={-1}>
 			{direction === "left" ? (
 				<HiChevronLeft
 					size={54}

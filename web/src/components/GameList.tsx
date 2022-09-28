@@ -11,7 +11,6 @@ export const GameList = ({ list }: { list: Game[] }) => {
 	>("start");
 
 	const listAreaDiv = useRef<HTMLDivElement>(null);
-	const listAreaContainer = useRef<HTMLDivElement>(null);
 
 	function isOverflowing(element: HTMLElement) {
 		return element.offsetWidth < element.scrollWidth;
@@ -25,12 +24,8 @@ export const GameList = ({ list }: { list: Game[] }) => {
 	}, [list]);
 
 	const handleClickLeft: MouseEventHandler = (event): void => {
-		if (
-			listAreaDiv.current &&
-			overflowActive &&
-			listAreaContainer.current
-		) {
-			listAreaDiv.current.scrollLeft -= 240;
+		if (listAreaDiv.current && overflowActive) {
+			listAreaDiv.current.scrollLeft -= 200;
 			if (listAreaDiv.current.scrollLeft === 0) {
 				setAtListPosition("start");
 			} else {
@@ -39,12 +34,8 @@ export const GameList = ({ list }: { list: Game[] }) => {
 		}
 	};
 	const handleClickRight: MouseEventHandler = (event): void => {
-		if (
-			listAreaDiv.current &&
-			overflowActive &&
-			listAreaContainer.current
-		) {
-			listAreaDiv.current.scrollLeft += 240;
+		if (listAreaDiv.current && overflowActive) {
+			listAreaDiv.current.scrollLeft += 200;
 			if (
 				listAreaDiv.current.offsetWidth +
 					listAreaDiv.current.scrollLeft ===
@@ -70,9 +61,7 @@ export const GameList = ({ list }: { list: Game[] }) => {
 						: true
 				}
 			/>
-			<div
-				className='relative'
-				ref={listAreaContainer}>
+			<div className='relative'>
 				<div
 					className='max-w-7xl overflow-x-scroll flex gap-6 flex-grow-0 flex-shrink-0 container-snap'
 					ref={listAreaDiv}>
