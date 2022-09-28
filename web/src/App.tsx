@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import logo from "./assets/logo.svg";
 
@@ -10,8 +10,11 @@ import { Spinner } from "./components/Spinner";
 import { Game } from "./types";
 
 import { mockList } from "./mockList";
+import { useModal } from "./useModal";
 
 function App() {
+	const [modal, setModal] = useModal({ open: false, id: "" });
+
 	const [modalOpen, setModalOpen] = useState(false);
 	const [gameList, setGameList] = useState<Game[]>([]);
 
@@ -34,7 +37,10 @@ function App() {
 				<Heading />
 
 				{gameList.length > 0 ? (
-					<GameList list={gameList} />
+					<GameList
+						list={gameList}
+						setModal={setModal}
+					/>
 				) : (
 					<Spinner />
 				)}
@@ -50,6 +56,7 @@ function App() {
 					onCloseFocusRef={openModalBtnRef}
 				/>
 			)}
+			<p>The modal is: {JSON.stringify(modal)}</p>
 		</div>
 	);
 }

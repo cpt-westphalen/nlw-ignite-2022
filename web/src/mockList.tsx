@@ -1,6 +1,6 @@
 import { Game } from "./types";
 
-export const mockList: Array<Game> = [
+export const mockList: Game[] = [
 	{
 		id: "1",
 		imgUrl: "./games/game-1.png",

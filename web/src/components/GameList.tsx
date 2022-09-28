@@ -4,7 +4,13 @@ import { GameCard } from "./GameCard";
 import { Game } from "../types";
 import { ArrowButton } from "./ArrowButton";
 
-export const GameList = ({ list }: { list: Game[] }) => {
+export const GameList = ({
+	list,
+	setModal,
+}: {
+	list: Game[];
+	setModal: Function;
+}) => {
 	const [overflowActive, setOverflowActive] = useState(false);
 	const [atListPosition, setAtListPosition] = useState<
 		"start" | "middle" | "end"
@@ -48,6 +54,19 @@ export const GameList = ({ list }: { list: Game[] }) => {
 		}
 	};
 
+	const handleCardClick: MouseEventHandler<HTMLAnchorElement> = (
+		event
+	): void => {
+		const url = event.currentTarget.href;
+		const id = url.slice(url.indexOf("#"));
+		if (id) {
+			setModal({ open: true, id: id });
+			console.log("setGameAdsModal({open: true, id: id})");
+		} else {
+			console.warn("invalid ad url");
+		}
+	};
+
 	return (
 		<div className='flex gap-6 flex-grow-0'>
 			<ArrowButton
@@ -67,7 +86,8 @@ export const GameList = ({ list }: { list: Game[] }) => {
 					ref={listAreaDiv}>
 					{list.map((g) => (
 						<a
-							href='#'
+							href={`#${g.id}`}
+							onClick={handleCardClick}
 							key={`${g.id}-anchor`}>
 							<GameCard
 								game={g}
