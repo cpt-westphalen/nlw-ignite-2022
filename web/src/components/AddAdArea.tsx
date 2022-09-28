@@ -1,13 +1,17 @@
+import { RefObject } from "react";
+
 import MagnifyingGlassPlus from "../assets/MagnifyingGlassPlus.svg";
 
 interface AddAdAreaProps {
 	setModalOpen: (arg: boolean) => void;
+	btnRef: RefObject<HTMLButtonElement>;
 }
 
-export const AddAdArea = ({ setModalOpen }: AddAdAreaProps) => {
+export const AddAdArea = ({ setModalOpen, btnRef }: AddAdAreaProps) => {
 	const handleClickCreateAdModalOpen = (
 		event: React.MouseEvent<HTMLElement>
 	) => {
+		btnRef.current?.blur();
 		setModalOpen(true);
 	};
 
@@ -22,7 +26,8 @@ export const AddAdArea = ({ setModalOpen }: AddAdAreaProps) => {
 			<div className='flex flex-grow-0 flex-shrink-0 basis-[190px] my-8 mr-8'>
 				<button
 					className='flex items-center justify-center gap-2 p-3 bg-violet-500 rounded-md hover:bg-violet-600'
-					onClick={handleClickCreateAdModalOpen}>
+					onClick={handleClickCreateAdModalOpen}
+					ref={btnRef}>
 					<img
 						src={MagnifyingGlassPlus}
 						alt=''

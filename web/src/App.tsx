@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import logo from "./assets/logo.svg";
 
@@ -14,6 +14,8 @@ import { mockList } from "./mockList";
 function App() {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [gameList, setGameList] = useState<Game[]>([]);
+
+	const openModalBtnRef = useRef<HTMLButtonElement>(null);
 
 	useEffect(() => {
 		const fetchGameList = () => {
@@ -36,13 +38,16 @@ function App() {
 				) : (
 					<Spinner />
 				)}
-				<AddAdArea setModalOpen={setModalOpen} />
+				<AddAdArea
+					setModalOpen={setModalOpen}
+					btnRef={openModalBtnRef}
+				/>
 			</div>
 			{modalOpen && (
 				<AddAdModal
-					modalOpen={modalOpen}
 					setModalOpen={setModalOpen}
 					list={gameList}
+					onCloseFocusRef={openModalBtnRef}
 				/>
 			)}
 		</div>
