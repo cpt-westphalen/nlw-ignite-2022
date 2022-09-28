@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import {
 	useForm,
 	SubmitHandler,
@@ -14,18 +14,13 @@ import { DayButton } from "./DayButton";
 
 import { AdTypes, Game } from "../types";
 
-const defaultFormValues: AdTypes = {
-	id: "",
-	author: "",
-	contact: "",
-	game: "",
-	experience: 0,
-	time: { start: "", end: "" },
-	days: [0, 0, 0, 0, 0, 0, 0],
-	voice: false,
-};
-
-export const AdFormInput = ({ list }: { list: Game[] }) => {
+export const AdFormInput = ({
+	list,
+	firstFocusableElementRef,
+}: {
+	list: Game[];
+	firstFocusableElementRef: RefObject<HTMLLabelElement>;
+}) => {
 	const {
 		register,
 		handleSubmit,
@@ -43,21 +38,12 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 		console.log(output);
 	};
 
-	const focusElement = useRef<HTMLSelectElement>(null);
-
 	const [daysSelected, setDaysSelected] = useState([0, 0, 0, 0, 0, 0, 0]);
 
 	function setDays(days: number[]) {
 		setValue("days", days);
 		setDaysSelected(days);
 	}
-
-	useEffect(() => {
-		if (focusElement.current) focusElement.current.focus();
-		return () => {
-			if (focusElement.current) focusElement.current.blur();
-		};
-	}, []);
 
 	return (
 		<form
@@ -67,7 +53,9 @@ export const AdFormInput = ({ list }: { list: Game[] }) => {
 			name='adInput'
 			id='adFormInput'
 			className='flex flex-col gap-3 font-medium'>
-			<label className='flex flex-col gap-1 font-semibold text-base mb-2'>
+			<label
+				className='flex flex-col gap-1 font-semibold text-base mb-2'
+				ref={firstFocusableElementRef}>
 				Qual o game?
 				<Controller
 					name='game'
