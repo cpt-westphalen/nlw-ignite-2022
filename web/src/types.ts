@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 interface Game {
     id: string,
     imgUrl: string,
@@ -12,14 +14,14 @@ interface AdTypes {
 	experience: number;
 	contact: string;
 	days: number[];
-	time: number;
+	time: {start: string, end: string};
 	voice: boolean;
 }
 
 interface AddAdModalProps {
-	modalOpen: boolean;
 	setModalOpen: (arg: boolean) => void;
 	list: Game[];
+	onCloseFocusRef: RefObject<HTMLButtonElement>;	
 }
 
 

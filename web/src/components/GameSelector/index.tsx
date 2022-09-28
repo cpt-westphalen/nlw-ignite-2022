@@ -12,12 +12,15 @@ const Content = ({ list }: { list: Game[] }) => (
 			<Select.Viewport className='rounded bg-zinc-900'>
 				{list.map((game) => (
 					<Select.Item
-						className='select-item hover:bg-zinc-500'
+						className='select-item hover:bg-zinc-500 hover:cursor-pointer'
 						value={game.id}
 						key={`${game.id}-selector`}>
 						<Select.ItemText>{game.title}</Select.ItemText>
 						<Select.ItemIndicator className='select-item-indicator'>
-							<GoCheck size={14} />
+							<GoCheck
+								size={14}
+								color='darkgreen'
+							/>
 						</Select.ItemIndicator>
 					</Select.Item>
 				))}
