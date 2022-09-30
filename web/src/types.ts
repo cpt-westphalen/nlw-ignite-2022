@@ -1,10 +1,15 @@
 import { RefObject } from "react";
 
+interface Modal {
+	open: boolean;
+	id: string;
+}
+
 interface Game {
     id: string,
     imgUrl: string,
     title: string,
-    ads: number
+    ads: AdTypes[]
 }
 
 interface AdTypes {
@@ -25,4 +30,4 @@ interface AddAdModalProps {
 }
 
 
-export type { Game, AdTypes, AddAdModalProps }
+export type { Game, AdTypes, AddAdModalProps, Modal }

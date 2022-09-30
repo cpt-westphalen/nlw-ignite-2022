@@ -1,9 +1,7 @@
 import { useState } from "react";
 
-interface Modal {
-	open: boolean;
-	id: string;
-}
+import { Modal } from "./types";
+
 export const useModal = ({ open, id }: Modal) => {
 	console.log("hook iniciado");
 	const [modalOpen, setModalOpen] = useState(open);

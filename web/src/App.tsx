@@ -11,6 +11,7 @@ import { Game } from "./types";
 
 import { mockList } from "./mockList";
 import { useModal } from "./useModal";
+import { GameAdsModal } from "./components/GameAdsModal";
 
 function App() {
 	const [modal, setModal] = useModal({ open: false, id: "" });
@@ -54,6 +55,12 @@ function App() {
 					setModalOpen={setModalOpen}
 					list={gameList}
 					onCloseFocusRef={openModalBtnRef}
+				/>
+			)}
+			{modal.open && (
+				<GameAdsModal
+					setModal={setModal}
+					gameId={modal.id}
 				/>
 			)}
 			<p>The modal is: {JSON.stringify(modal)}</p>

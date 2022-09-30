@@ -54,17 +54,16 @@ export const GameList = ({
 		}
 	};
 
-	const handleCardClick: MouseEventHandler<HTMLAnchorElement> = (
-		event
-	): void => {
-		const url = event.currentTarget.href;
-		const id = url.slice(url.indexOf("#"));
-		if (id) {
-			setModal({ open: true, id: id });
-			console.log("setGameAdsModal({open: true, id: id})");
-		} else {
-			console.warn("invalid ad url");
-		}
+	const handleCardClick = (id: string) => {
+		setModal({ open: true, id: id });
+		// const url = event.currentTarget.href;
+		// const id = url.slice(url.indexOf("#") + 1);
+		// if (id) {
+		// 	setModal({ open: true, id: id });
+		// 	console.log("setGameAdsModal({open: true, id: id})");
+		// } else {
+		// 	console.warn("invalid ad url");
+		// }
 	};
 
 	return (
@@ -85,15 +84,15 @@ export const GameList = ({
 					className='max-w-7xl overflow-x-scroll flex gap-6 flex-grow-0 flex-shrink-0 container-snap'
 					ref={listAreaDiv}>
 					{list.map((g) => (
-						<a
-							href={`#${g.id}`}
-							onClick={handleCardClick}
+						<div
+							className='hover:cursor-pointer'
+							onClick={() => handleCardClick(g.id)}
 							key={`${g.id}-anchor`}>
 							<GameCard
 								game={g}
 								key={g.id}
 							/>
-						</a>
+						</div>
 					))}
 				</div>
 				{overflowActive && !(atListPosition === "end") && (
