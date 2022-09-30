@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Modal } from "./types";
+import { Modal } from "../types/types";
 
 export const useModal = ({ open, id }: Modal) => {
 	console.log("hook iniciado");

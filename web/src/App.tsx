@@ -7,10 +7,10 @@ import { AddAdArea } from "./components/AddAdArea";
 import { AddAdModal } from "./components/AddAdModal";
 import { Spinner } from "./components/Spinner";
 
-import { Game } from "./types";
+import { Game } from "./types/types";
 
 import { mockList } from "./mockList";
-import { useModal } from "./useModal";
+import { useModal } from "./utils/useModal";
 import { GameAdsModal } from "./components/GameAdsModal";
 
 function App() {

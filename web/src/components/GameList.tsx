@@ -1,7 +1,7 @@
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
 
 import { GameCard } from "./GameCard";
-import { Game } from "../types";
+import { Game } from "../types/types";
 import { ArrowButton } from "./ArrowButton";
 
 export const GameList = ({

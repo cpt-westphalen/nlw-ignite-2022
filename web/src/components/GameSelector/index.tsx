@@ -2,7 +2,7 @@ import * as Select from "@radix-ui/react-select";
 
 import { GoCheck } from "react-icons/go";
 
-import { Game } from "../../types";
+import { Game } from "../../types/types";
 import "./styles.css";
 
 const Content = ({ list }: { list: Game[] }) => (

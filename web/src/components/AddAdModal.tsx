@@ -2,7 +2,7 @@ import { AdFormInput } from "./AdFormInput";
 
 import { TbDeviceGamepad2 } from "react-icons/tb";
 
-import { AddAdModalProps } from "../types";
+import { AddAdModalProps } from "../types/types";
 import { useEffect, useRef } from "react";
 
 export const AddAdModal = ({

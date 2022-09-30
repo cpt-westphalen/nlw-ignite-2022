@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { TbDeviceGamepad2 } from "react-icons/tb";
 
-import { Game, Modal } from "../../types";
+import { Game, Modal } from "../../types/types";
 
 import { mockList } from "../../mockList";
 import { Spinner } from "../Spinner";

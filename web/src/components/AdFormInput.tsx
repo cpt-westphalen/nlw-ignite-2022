@@ -12,7 +12,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { GameSelector } from "./GameSelector";
 import { DayButton } from "./DayButton";
 
-import { AdTypes, Game } from "../types";
+import { AdTypes, Game } from "../types/types";
 
 export const AdFormInput = ({
 	list,
