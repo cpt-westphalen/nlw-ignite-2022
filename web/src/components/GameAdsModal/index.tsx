@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { TbDeviceGamepad2 } from "react-icons/tb";
 
-import { Game, Modal } from "../../types/types";
+import { AdTypes, Game, Modal } from "../../types/types";
 
 import { mockList } from "../../mockList";
 import { Spinner } from "../Spinner";
@@ -97,58 +97,76 @@ export const GameAdsModal = ({
 
 const AdsContent = ({ game }: { game: Game }) => {
 	return (
-		<div className='flex flex-row gap-4 items-center'>
-			<img
-				src={game.imgUrl}
-				className='w-60 rounded-lg border-solid border-zinc-800 border-2'
-			/>
-			<div>
-				<h2
-					className='font-black text-4xl mb-0'
-					id='modalTitle'>
-					{game.title}
-				</h2>
-				<p className='text-zinc-400 text-lg'>
-					Conecte-se e comece a jogar!
-				</p>
-				<div className='flex flex-row flex-shrink-0 gap-2 overflow-x-scroll max-w-md'>
-					{game.ads.map((ad) => {
-						return (
-							<article className='w-60 p-3 flex-shrink-0 rounded gap-4 bg-zinc-900'>
-								<label className='text-sm text-zinc-400'>
-									Nome
-									<p className='text-base text-white'>
-										{ad.author}
-									</p>
-								</label>
-								<label className='text-sm text-zinc-400'>
-									Tempo de jogo
-									<p className='text-base text-white'>
-										{ad.experience}
-									</p>
-								</label>
-								<label className='text-sm text-zinc-400'>
-									Disponibilidade
-									<p className='text-base text-white'>
-										{ad.days.map((d) =>
-											d !== 0 ? `${d}ª` : ""
-										)}
-									</p>
-								</label>
-								<label className='text-sm text-zinc-400'>
-									Chamada de Áudio
-									<p className='text-base text-white'>
-										{ad.voice ? "sim" : "não"}
-									</p>
-								</label>
-								<button className='bg-green-700 p-2 m-2 self-end justify-self-center'>
-									Conectar!
-								</button>
-							</article>
-						);
-					})}
+		<div className='flex flex-col gap-4 justify-center items-center h-[420px]'>
+			<div className='flex gap-4 items-center'>
+				<div
+					style={{ backgroundImage: `url('./${game.imgUrl}')` }}
+					className='overflow-clip bg-top flex-shrink-0 w-20 h-20 rounded-50 border-solid border-zinc-800 border-2'
+				/>
+				<div>
+					<h2
+						className='font-black text-4xl mb-0'
+						id='modalTitle'>
+						{game.title}
+					</h2>
+					<p className='text-zinc-400 text-lg'>
+						Conecte-se e comece a jogar!
+					</p>
 				</div>
+			</div>
+			<div className='flex flex-row flex-shrink-0 gap-2 overflow-x-scroll max-w-2xl'>
+				{game.ads.map((ad) => {
+					return <AdCard ad={ad} />;
+				})}
 			</div>
 		</div>
 	);
 };
+
+const AdCard = ({ ad }: { ad: AdTypes }) => (
+	<article className='flex flex-col flex-grow relative min-h-full w-64 my-2 py-3 px-4 flex-shrink-0 gap-2 rounded bg-zinc-900'>
+		<span className='absolute text-sm text-yellow-600 right-3'>Novo!</span>
+		<label className='block text-sm text-zinc-400'>
+			Nome
+			<p className='text-base text-white'>{ad.author}</p>
+		</label>
+		<label className='block text-sm text-zinc-400'>
+			Tempo de jogo
+			<p className='text-base text-white'>{`${ad.experience} ano${
+				ad.experience === 1 ? "" : "s"
+			}`}</p>
+		</label>
+		<label className='block text-sm text-zinc-400'>
+			Disponibilidade
+			<p className='text-base text-white'>
+				{ad.days.map((d) => {
+					let days = "";
+					days +=
+						d !== 0
+							? d == 7
+								? "sáb."
+								: d == 1
+								? "dom."
+								: `${d}ª`
+							: "";
+					if (days) {
+						days += d === ad.days[ad.days.length - 1] ? "" : ", ";
+					}
+					return days;
+				})}
+			</p>
+		</label>
+		<label className='block text-sm text-zinc-400'>
+			Chamada de Áudio
+			<p
+				className={`text-base ${
+					ad.voice ? "text-green-600 font-bold" : "text-white"
+				}`}>
+				{ad.voice ? "sim" : "não"}
+			</p>
+		</label>
+		<button className='bg-green-700 hover:bg-green-800 p-2 mt-3 self-center justify-self-end'>
+			Conectar!
+		</button>
+	</article>
+);
