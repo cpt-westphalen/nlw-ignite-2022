@@ -20,14 +20,23 @@ export const GameAdsModal = ({
 
 	const [game, setGame] = useState<Game>();
 
-	const handleShiftTab = (event: KeyboardEvent) => {
-		if (event.shiftKey && event.key === "Tab") {
-			event.preventDefault();
-			lastFocusableElementRef.current?.focus();
-		}
-	};
+	function closeModal() {
+		setModal({ open: false, id: "" });
+	}
 
 	useEffect(() => {
+		const handleShiftTab = (event: KeyboardEvent) => {
+			if (event.shiftKey && event.key === "Tab") {
+				event.preventDefault();
+				lastFocusableElementRef.current?.focus();
+			}
+		};
+		const handleEsc = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				closeModal();
+			}
+		};
+
 		const focusTrap = () => {
 			modalContainerRef.current?.focus();
 			firstFocusableElementRef.current?.addEventListener(
@@ -49,16 +58,14 @@ export const GameAdsModal = ({
 		};
 
 		focusTrap();
+		document.addEventListener("keyup", handleEsc);
 		fetchGameData(gameId);
 
 		return () => {
 			clearFocusTrap();
+			document.removeEventListener("keyup", handleEsc);
 		};
 	}, []);
-
-	function closeModal() {
-		setModal({ open: false, id: "" });
-	}
 
 	return (
 		<div
