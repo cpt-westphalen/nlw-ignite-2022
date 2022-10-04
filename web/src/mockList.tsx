@@ -15,6 +15,7 @@ export const mockList: Game[] = [
 				days: [0, 0, 3, 0, 5, 6, 7],
 				time: { start: "18:30", end: "22:00" },
 				voice: true,
+				createdAt: "2022-10-01",
 			},
 			{
 				id: "2124124",
@@ -25,6 +26,7 @@ export const mockList: Game[] = [
 				days: [0, 0, 0, 0, 0, 0, 0],
 				time: { start: "", end: "" },
 				voice: true,
+				createdAt: "2022-09-30",
 			},
 			{
 				id: "1251251",
@@ -35,6 +37,7 @@ export const mockList: Game[] = [
 				days: [0, 0, 3, 0, 5, 6, 7],
 				time: { start: "18:30", end: "22:00" },
 				voice: false,
+				createdAt: "2022-08-10",
 			},
 			{
 				id: "1251351351",

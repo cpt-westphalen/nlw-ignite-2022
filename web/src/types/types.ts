@@ -21,6 +21,7 @@ interface AdTypes {
 	days: number[];
 	time: {start: string, end: string};
 	voice: boolean;
+	createdAt?: string;
 }
 
 type AddAdModalProps = {

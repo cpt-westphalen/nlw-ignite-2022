@@ -145,9 +145,28 @@ const AdsContent = ({ game }: { game: Game; setModal: (p: Modal) => void }) => {
 	);
 };
 
+function isRecent(date: string) {
+	const today = new Date().toISOString();
+	const result =
+		parseInt(today.slice(0, today.indexOf("T")).replaceAll(/\D/g, "")) -
+			parseInt(date.replaceAll(/\D/g, "")) <
+		100;
+	return result;
+}
+
 const AdCard = ({ ad }: { ad: AdTypes }) => (
 	<article className='flex flex-col flex-grow relative min-h-full w-64 my-2 py-3 px-4 flex-shrink-0 gap-2 rounded bg-zinc-900'>
-		<span className='absolute text-sm text-yellow-600 right-3'>Novo!</span>
+		{ad.createdAt ? (
+			isRecent(ad.createdAt) ? (
+				<span className='absolute text-sm text-yellow-600 right-3'>
+					Novo!
+				</span>
+			) : (
+				""
+			)
+		) : (
+			""
+		)}
 		<label className='block text-sm text-zinc-400'>
 			Nome
 			<p className='text-base text-white'>{ad.author}</p>
