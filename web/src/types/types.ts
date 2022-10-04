@@ -1,9 +1,11 @@
 import { RefObject } from "react";
 
-type Modal = {
+type ModalType = {
 	open: boolean;
 	id: string;
 }
+
+type SetModalType = (value: ModalType) => void;
 
 interface Game {
     id: string,
@@ -25,10 +27,16 @@ interface AdTypes {
 }
 
 type AddAdModalProps = {
-	setModal: (value: Modal) => void;
+	setModal: SetModalType;
 	list: Game[];
 	onCloseFocusRef: RefObject<HTMLButtonElement>;	
 }
 
+type GameAdsModalProps = {
+	setModal: SetModalType;
+	gameId: string;
+	onCloseFocusRef?: React.RefObject<HTMLButtonElement>;
+}
 
-export type { Game, AdTypes, AddAdModalProps, Modal }
+
+export type { Game, AdTypes, AddAdModalProps, ModalType, SetModalType, GameAdsModalProps }

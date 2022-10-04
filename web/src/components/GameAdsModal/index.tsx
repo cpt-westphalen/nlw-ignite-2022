@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { TbDeviceGamepad2 } from "react-icons/tb";
 
-import { AdTypes, Game, Modal } from "../../types/types";
+import { AdTypes, Game, SetModalType } from "../../types/types";
 
 import { mockList } from "../../mockList";
 import { Spinner } from "../Spinner";
@@ -12,7 +12,7 @@ export const GameAdsModal = ({
 	gameId,
 	onCloseFocusRef,
 }: {
-	setModal: (p: Modal) => void;
+	setModal: SetModalType;
 	gameId: string;
 	onCloseFocusRef?: React.RefObject<HTMLButtonElement>;
 }) => {
@@ -113,7 +113,7 @@ export const GameAdsModal = ({
 	);
 };
 
-const AdsContent = ({ game }: { game: Game; setModal: (p: Modal) => void }) => {
+const AdsContent = ({ game }: { game: Game; setModal: SetModalType }) => {
 	return (
 		<div className='flex flex-col gap-4 justify-center items-center'>
 			<div className='flex gap-4 items-center'>

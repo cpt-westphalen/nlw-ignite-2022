@@ -12,6 +12,7 @@ import { Game } from "./types/types";
 import { mockList } from "./mockList";
 import { useModal } from "./utils/useModal";
 import { GameAdsModal } from "./components/GameAdsModal";
+import { Modal } from "./components/Modal";
 
 function App() {
 	const [modal, setModal] = useModal({ open: false, id: "" });
@@ -49,20 +50,14 @@ function App() {
 					btnRef={openModalBtnRef}
 				/>
 			</div>
-			{modal.open &&
-				(modal.id === "0" ? (
-					<AddAdModal
-						list={gameList}
-						setModal={setModal}
-						onCloseFocusRef={openModalBtnRef}
-					/>
-				) : (
-					<GameAdsModal
-						setModal={setModal}
-						gameId={modal.id}
-						onCloseFocusRef={openModalBtnRef}
-					/>
-				))}
+			<Modal
+				modal={modal}
+				props={{
+					list: gameList,
+					setModal: setModal,
+					onCloseFocusRef: openModalBtnRef,
+				}}
+			/>
 		</div>
 	);
 }
