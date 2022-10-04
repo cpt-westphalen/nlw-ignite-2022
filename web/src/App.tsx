@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import logo from "./assets/logo.svg";
 
@@ -63,7 +63,6 @@ function App() {
 					gameId={modal.id}
 				/>
 			)}
-			<p>The modal is: {JSON.stringify(modal)}</p>
 		</div>
 	);
 }

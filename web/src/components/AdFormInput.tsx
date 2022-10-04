@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useState } from "react";
 import {
 	useForm,
 	SubmitHandler,
@@ -240,15 +240,3 @@ const Errors = ({ errors }: { errors: FieldErrorsImpl<AdTypes> }) => {
 		</div>
 	);
 };
-
-const uncontrolledSelector = (
-	<select
-		name='game'
-		id='adGameInput'
-		placeholder='Selecione o game que deseja jogar'>
-		<option>League of Legends</option>
-		<option>Dota 2</option>
-		<option>CS:GO</option>
-		<option>Apex Legends</option>
-	</select>
-);

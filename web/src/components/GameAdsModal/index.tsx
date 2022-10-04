@@ -14,7 +14,6 @@ export const GameAdsModal = ({
 	setModal: (modal: Modal) => void;
 	gameId: string;
 }) => {
-	const modalContainerRef = useRef<HTMLDivElement>(null);
 	const firstFocusableElementRef = useRef<HTMLLabelElement>(null);
 	const lastFocusableElementRef = useRef<HTMLButtonElement>(null);
 
@@ -38,7 +37,7 @@ export const GameAdsModal = ({
 		};
 
 		const focusTrap = () => {
-			modalContainerRef.current?.focus();
+			firstFocusableElementRef.current?.focus();
 			firstFocusableElementRef.current?.addEventListener(
 				"keydown",
 				handleShiftTab
@@ -73,7 +72,6 @@ export const GameAdsModal = ({
 			onClick={closeModal}
 			className='bg-black bg-opacity-90 fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col justify-center items-center'>
 			<div
-				ref={modalContainerRef}
 				role='dialog'
 				aria-labelledby='modalTitle'
 				className='z-10 px-10 py-8 bg-[#2A2634] rounded-lg flex flex-col max-w-3xl gap-4 select-none'

@@ -1,7 +1,7 @@
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
 
 import { GameCard } from "./GameCard";
-import { Game } from "../types/types";
+import { Game, Modal } from "../types/types";
 import { ArrowButton } from "./ArrowButton";
 
 export const GameList = ({
@@ -9,7 +9,7 @@ export const GameList = ({
 	setModal,
 }: {
 	list: Game[];
-	setModal: Function;
+	setModal: (value: Modal) => void;
 }) => {
 	const [overflowActive, setOverflowActive] = useState(false);
 	const [atListPosition, setAtListPosition] = useState<
@@ -56,14 +56,6 @@ export const GameList = ({
 
 	const handleCardClick = (id: string) => {
 		setModal({ open: true, id: id });
-		// const url = event.currentTarget.href;
-		// const id = url.slice(url.indexOf("#") + 1);
-		// if (id) {
-		// 	setModal({ open: true, id: id });
-		// 	console.log("setGameAdsModal({open: true, id: id})");
-		// } else {
-		// 	console.warn("invalid ad url");
-		// }
 	};
 
 	return (
@@ -88,10 +80,7 @@ export const GameList = ({
 							className='hover:cursor-pointer'
 							onClick={() => handleCardClick(g.id)}
 							key={`${g.id}-anchor`}>
-							<GameCard
-								game={g}
-								key={g.id}
-							/>
+							<GameCard game={g} />
 						</div>
 					))}
 				</div>

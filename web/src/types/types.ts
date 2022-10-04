@@ -23,7 +23,7 @@ interface AdTypes {
 	voice: boolean;
 }
 
-interface AddAdModalProps {
+type AddAdModalProps = {
 	setModalOpen: (arg: boolean) => void;
 	list: Game[];
 	onCloseFocusRef: RefObject<HTMLButtonElement>;	
