@@ -15,7 +15,7 @@ export const mockList: Game[] = [
 				days: [0, 0, 3, 0, 5, 6, 7],
 				time: { start: "18:30", end: "22:00" },
 				voice: true,
-				createdAt: "2022-10-01",
+				createdAt: "2022-10-01T02:15:12.356Z",
 			},
 			{
 				id: "2124124",
@@ -26,7 +26,7 @@ export const mockList: Game[] = [
 				days: [0, 0, 0, 0, 0, 0, 0],
 				time: { start: "", end: "" },
 				voice: true,
-				createdAt: "2022-09-30",
+				createdAt: "2022-09-28T15:20:10.251Z",
 			},
 			{
 				id: "1251251",
@@ -37,7 +37,7 @@ export const mockList: Game[] = [
 				days: [0, 0, 3, 0, 5, 6, 7],
 				time: { start: "18:30", end: "22:00" },
 				voice: false,
-				createdAt: "2022-08-10",
+				createdAt: "2022-09-10T02:15:12.356Z",
 			},
 			{
 				id: "1251351351",

@@ -146,12 +146,28 @@ const AdsContent = ({ game }: { game: Game; setModal: (p: Modal) => void }) => {
 };
 
 function isRecent(date: string) {
-	const today = new Date().toISOString();
-	const result =
-		parseInt(today.slice(0, today.indexOf("T")).replaceAll(/\D/g, "")) -
-			parseInt(date.replaceAll(/\D/g, "")) <
-		100;
-	return result;
+	// checks if ad was placed less than N days ago.
+	const NUM_OF_DAYS = 7;
+	const now = new Date();
+
+	const today = [now.getFullYear(), now.getMonth() + 1, now.getDate()];
+	const compareDate = date.split(/\D/).map((v) => parseInt(v));
+
+	const result = () => {
+		if (today[0] === compareDate[0]) {
+			if (today[1] === compareDate[1]) {
+				return today[2] - compareDate[2] < NUM_OF_DAYS;
+			} else if (today[1] - compareDate[1] === 1) {
+				return today[2] + 30 - compareDate[2] < NUM_OF_DAYS;
+			}
+		} else if (today[0] - compareDate[0] === 1) {
+			if (today[1] + 12 - compareDate[1] <= 1) {
+				return today[2] + 30 - compareDate[2] < NUM_OF_DAYS;
+			}
+		}
+		return false;
+	};
+	return result();
 }
 
 const AdCard = ({ ad }: { ad: AdTypes }) => (
