@@ -6,7 +6,7 @@ import { AddAdModalProps } from "../types/types";
 import { useEffect, useRef } from "react";
 
 export const AddAdModal = ({
-	setModalOpen,
+	setModal,
 	list,
 	onCloseFocusRef,
 }: AddAdModalProps) => {
@@ -14,7 +14,7 @@ export const AddAdModal = ({
 	const lastFocusableElementRef = useRef<HTMLButtonElement>(null);
 
 	function closeModal() {
-		setModalOpen(false);
+		setModal({ open: false, id: "" });
 		onCloseFocusRef.current?.focus();
 	}
 

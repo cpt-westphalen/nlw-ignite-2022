@@ -1,18 +1,19 @@
 import { RefObject } from "react";
 
 import MagnifyingGlassPlus from "../assets/MagnifyingGlassPlus.svg";
+import { Modal } from "../types/types";
 
 interface AddAdAreaProps {
-	setModalOpen: (arg: boolean) => void;
+	setModal: (arg: Modal) => void;
 	btnRef: RefObject<HTMLButtonElement>;
 }
 
-export const AddAdArea = ({ setModalOpen, btnRef }: AddAdAreaProps) => {
+export const AddAdArea = ({ setModal, btnRef }: AddAdAreaProps) => {
 	const handleClickCreateAdModalOpen = (
 		event: React.MouseEvent<HTMLElement>
 	) => {
 		btnRef.current?.blur();
-		setModalOpen(true);
+		setModal({ open: true, id: "0" });
 	};
 
 	return (

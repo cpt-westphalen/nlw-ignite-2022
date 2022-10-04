@@ -16,7 +16,6 @@ import { GameAdsModal } from "./components/GameAdsModal";
 function App() {
 	const [modal, setModal] = useModal({ open: false, id: "" });
 
-	const [modalOpen, setModalOpen] = useState(false);
 	const [gameList, setGameList] = useState<Game[]>([]);
 
 	const openModalBtnRef = useRef<HTMLButtonElement>(null);
@@ -46,23 +45,24 @@ function App() {
 					<Spinner />
 				)}
 				<AddAdArea
-					setModalOpen={setModalOpen}
+					setModal={setModal}
 					btnRef={openModalBtnRef}
 				/>
 			</div>
-			{modalOpen && (
-				<AddAdModal
-					setModalOpen={setModalOpen}
-					list={gameList}
-					onCloseFocusRef={openModalBtnRef}
-				/>
-			)}
-			{modal.open && (
-				<GameAdsModal
-					setModal={setModal}
-					gameId={modal.id}
-				/>
-			)}
+			{modal.open &&
+				(modal.id === "0" ? (
+					<AddAdModal
+						list={gameList}
+						setModal={setModal}
+						onCloseFocusRef={openModalBtnRef}
+					/>
+				) : (
+					<GameAdsModal
+						setModal={setModal}
+						gameId={modal.id}
+						onCloseFocusRef={openModalBtnRef}
+					/>
+				))}
 		</div>
 	);
 }

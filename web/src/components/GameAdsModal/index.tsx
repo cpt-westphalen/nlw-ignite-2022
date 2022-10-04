@@ -10,9 +10,11 @@ import { Spinner } from "../Spinner";
 export const GameAdsModal = ({
 	setModal,
 	gameId,
+	onCloseFocusRef,
 }: {
-	setModal: (modal: Modal) => void;
+	setModal: (value: Modal) => void;
 	gameId: string;
+	onCloseFocusRef: React.RefObject<HTMLButtonElement>;
 }) => {
 	const firstFocusableElementRef = useRef<HTMLLabelElement>(null);
 	const lastFocusableElementRef = useRef<HTMLButtonElement>(null);
