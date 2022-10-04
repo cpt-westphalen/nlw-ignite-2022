@@ -12,9 +12,9 @@ export const GameAdsModal = ({
 	gameId,
 	onCloseFocusRef,
 }: {
-	setModal: (value: Modal) => void;
+	setModal: (p: Modal) => void;
 	gameId: string;
-	onCloseFocusRef: React.RefObject<HTMLButtonElement>;
+	onCloseFocusRef?: React.RefObject<HTMLButtonElement>;
 }) => {
 	const firstFocusableElementRef = useRef<HTMLLabelElement>(null);
 	const lastFocusableElementRef = useRef<HTMLButtonElement>(null);
@@ -23,7 +23,12 @@ export const GameAdsModal = ({
 
 	function closeModal() {
 		setModal({ open: false, id: "" });
+		onCloseFocusRef?.current?.focus();
 	}
+
+	const handleClickCreateAd = () => {
+		setModal({ open: true, id: "0" });
+	};
 
 	useEffect(() => {
 		const handleShiftTab = (event: KeyboardEvent) => {
@@ -80,7 +85,14 @@ export const GameAdsModal = ({
 				onClick={(e) => {
 					e.stopPropagation();
 				}}>
-				{game ? <AdsContent game={game} /> : <Spinner />}
+				{game ? (
+					<AdsContent
+						game={game}
+						setModal={setModal}
+					/>
+				) : (
+					<Spinner />
+				)}
 
 				<div className='flex justify-end items-center gap-8'>
 					<button
@@ -90,11 +102,10 @@ export const GameAdsModal = ({
 					</button>
 					<button
 						ref={lastFocusableElementRef}
-						type='submit'
-						form='adFormInput'
+						onClick={handleClickCreateAd}
 						className='bg-violet-500 hover:bg-violet-600 flex gap-2'>
 						<TbDeviceGamepad2 size={24} />
-						Confirma
+						Criar anúncio
 					</button>
 				</div>
 			</div>
@@ -102,9 +113,9 @@ export const GameAdsModal = ({
 	);
 };
 
-const AdsContent = ({ game }: { game: Game }) => {
+const AdsContent = ({ game }: { game: Game; setModal: (p: Modal) => void }) => {
 	return (
-		<div className='flex flex-col gap-4 justify-center items-center h-[420px]'>
+		<div className='flex flex-col gap-4 justify-center items-center'>
 			<div className='flex gap-4 items-center'>
 				<div
 					style={{ backgroundImage: `url('./${game.imgUrl}')` }}
@@ -122,9 +133,13 @@ const AdsContent = ({ game }: { game: Game }) => {
 				</div>
 			</div>
 			<div className='flex flex-row flex-shrink-0 gap-2 overflow-x-scroll max-w-2xl'>
-				{game.ads.map((ad) => {
-					return <AdCard ad={ad} />;
-				})}
+				{game.ads.length > 0 ? (
+					game.ads.map((ad) => {
+						return <AdCard ad={ad} />;
+					})
+				) : (
+					<CreateAdFallback />
+				)}
 			</div>
 		</div>
 	);
@@ -138,29 +153,35 @@ const AdCard = ({ ad }: { ad: AdTypes }) => (
 			<p className='text-base text-white'>{ad.author}</p>
 		</label>
 		<label className='block text-sm text-zinc-400'>
-			Tempo de jogo
-			<p className='text-base text-white'>{`${ad.experience} ano${
-				ad.experience === 1 ? "" : "s"
-			}`}</p>
+			Experiência de jogo
+			<p className='text-base text-white'>
+				{ad.experience == 0
+					? "< 1 ano"
+					: `${ad.experience} ano${ad.experience === 1 ? "" : "s"}`}
+			</p>
 		</label>
 		<label className='block text-sm text-zinc-400'>
 			Disponibilidade
 			<p className='text-base text-white'>
-				{ad.days.map((d) => {
-					let days = "";
-					days +=
-						d !== 0
-							? d == 7
-								? "sáb."
-								: d == 1
-								? "dom."
-								: `${d}ª`
-							: "";
-					if (days) {
-						days += d === ad.days[ad.days.length - 1] ? "" : ", ";
-					}
-					return days;
-				})}
+				{ad.days.filter((n) => n !== 0).length > 0
+					? ad.days.map((d) => {
+							let days = "";
+							days +=
+								d !== 0
+									? d == 7
+										? "sáb."
+										: d == 1
+										? "dom."
+										: `${d}ª`
+									: "";
+							if (days) {
+								const isLastDay =
+									d === ad.days[ad.days.length - 1];
+								days += isLastDay ? "" : ", ";
+							}
+							return days;
+					  })
+					: "Não informado"}
 			</p>
 		</label>
 		<label className='block text-sm text-zinc-400'>
@@ -176,4 +197,11 @@ const AdCard = ({ ad }: { ad: AdTypes }) => (
 			Conectar!
 		</button>
 	</article>
+);
+
+const CreateAdFallback = () => (
+	<div className='flex flex-col items-center gap-3 my-10 mx-3'>
+		<p>{"Não foram encontrados anúncios para este jogo."}</p>
+		<p>{"Deseja criar um novo anúncio?"}</p>
+	</div>
 );
