@@ -30,12 +30,14 @@ type AddAdModalProps = {
 	setModal: SetModalType;
 	list: Game[];
 	onCloseFocusRef: RefObject<HTMLButtonElement>;	
+	defaultGame?: string;
 }
 
 type GameAdsModalProps = {
 	setModal: SetModalType;
 	gameId: string;
 	onCloseFocusRef?: React.RefObject<HTMLButtonElement>;
+	setDefaultGame: (value: string | undefined) => void;
 }
 
 

@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 
 import { TbDeviceGamepad2 } from "react-icons/tb";
 
-import { AdTypes, Game, SetModalType } from "../../types/types";
+import {
+	AdTypes,
+	Game,
+	GameAdsModalProps,
+	SetModalType,
+} from "../../types/types";
 
 import { mockList } from "../../mockList";
 import { Spinner } from "../Spinner";
@@ -11,22 +16,21 @@ export const GameAdsModal = ({
 	setModal,
 	gameId,
 	onCloseFocusRef,
-}: {
-	setModal: SetModalType;
-	gameId: string;
-	onCloseFocusRef?: React.RefObject<HTMLButtonElement>;
-}) => {
+	setDefaultGame,
+}: GameAdsModalProps) => {
 	const firstFocusableElementRef = useRef<HTMLLabelElement>(null);
 	const lastFocusableElementRef = useRef<HTMLButtonElement>(null);
 
 	const [game, setGame] = useState<Game>();
 
 	function closeModal() {
+		setDefaultGame(undefined);
 		setModal({ open: false, id: "" });
 		onCloseFocusRef?.current?.focus();
 	}
 
 	const handleClickCreateAd = () => {
+		setDefaultGame(game?.id);
 		setModal({ open: true, id: "0" });
 	};
 

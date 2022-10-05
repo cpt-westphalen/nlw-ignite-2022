@@ -17,9 +17,11 @@ import { AdTypes, Game } from "../types/types";
 export const AdFormInput = ({
 	list,
 	firstFocusableElementRef,
+	defaultGame,
 }: {
 	list: Game[];
 	firstFocusableElementRef: RefObject<HTMLLabelElement>;
+	defaultGame?: string;
 }) => {
 	const {
 		register,
@@ -59,10 +61,14 @@ export const AdFormInput = ({
 				Qual o game?
 				<Controller
 					name='game'
+					defaultValue={defaultGame}
 					control={control}
 					rules={{ required: "É necessário informar um jogo." }}
-					render={({ field: { name, ref, onChange, onBlur } }) => (
+					render={({
+						field: { name, ref, onChange, onBlur, value },
+					}) => (
 						<GameSelector.Root
+							defaultValue={value}
 							name={name}
 							onValueChange={onChange}>
 							<GameSelector.Trigger

@@ -9,6 +9,7 @@ export const AddAdModal = ({
 	setModal,
 	list,
 	onCloseFocusRef,
+	defaultGame,
 }: AddAdModalProps) => {
 	const firstFocusableElementRef = useRef<HTMLLabelElement>(null);
 	const lastFocusableElementRef = useRef<HTMLButtonElement>(null);
@@ -74,6 +75,7 @@ export const AddAdModal = ({
 				<AdFormInput
 					list={list}
 					firstFocusableElementRef={firstFocusableElementRef}
+					defaultGame={defaultGame}
 				/>
 				<div className='flex justify-end items-center gap-8'>
 					<button
