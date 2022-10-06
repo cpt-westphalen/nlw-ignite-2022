@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { TbDeviceGamepad2 } from "react-icons/tb";
 import { MdOutlineCopyAll } from "react-icons/md";
+import { BsCheck2 } from "react-icons/bs";
 
 import {
 	AdTypes,
@@ -151,12 +152,6 @@ const AdsContent = ({ game }: { game: Game; setModal: SetModalType }) => {
 };
 
 const AdCard = ({ ad }: { ad: AdTypes }) => {
-	const [showContact, setShowContact] = useState(false);
-
-	const handleClickContact = (e: React.MouseEvent<HTMLButtonElement>) => {
-		setShowContact(true);
-	};
-
 	const isRecent = useMemo(() => {
 		// checks if ad was placed less than N days ago.
 		if (ad.createdAt) {
@@ -191,12 +186,6 @@ const AdCard = ({ ad }: { ad: AdTypes }) => {
 			return false;
 		}
 	}, [ad.createdAt]);
-
-	const handleCopyContact = (e: React.MouseEvent<HTMLButtonElement>) => {
-		navigator.clipboard.writeText(ad.contact).then(() => {
-			console.log("copied!");
-		});
-	};
 
 	return (
 		<article className='flex flex-col flex-grow relative min-h-full w-64 my-2 py-3 px-4 flex-shrink-0 gap-2 rounded bg-zinc-900'>
@@ -258,25 +247,7 @@ const AdCard = ({ ad }: { ad: AdTypes }) => {
 					{ad.voice ? "sim" : "não"}
 				</p>
 			</label>
-			{showContact ? (
-				<div className='flex bg-zinc-800 border-solid border-2 rounded-xl border-zinc-600 py-0 px-2 mt-3 self-center justify-self-end justify-center items-center'>
-					<address className='text-sm text-zinc-300'>
-						{ad.contact}
-					</address>
-					<button
-						title='Copiar contato'
-						onClick={handleCopyContact}>
-						<MdOutlineCopyAll size={18} />
-					</button>
-				</div>
-			) : (
-				<button
-					title='Ver informações de contato'
-					onClick={handleClickContact}
-					className='bg-green-700 hover:bg-green-800 p-2 mt-3 self-center justify-self-end'>
-					Conectar!
-				</button>
-			)}
+			<ContactButton contact={ad.contact} />
 		</article>
 	);
 };
@@ -287,3 +258,62 @@ const CreateAdFallback = () => (
 		<p>{"Deseja criar um novo anúncio?"}</p>
 	</div>
 );
+
+const ContactButton = ({ contact }: { contact: string }) => {
+	const [showContact, setShowContact] = useState(false);
+	const [contactCopied, setContactCopied] = useState(false);
+
+	const handleClickContact = (e: React.MouseEvent<HTMLButtonElement>) => {
+		setShowContact(true);
+	};
+
+	const handleCopyContact = (e: React.MouseEvent<HTMLButtonElement>) => {
+		navigator.clipboard.writeText(contact).then(() => {
+			console.log("copied!");
+		});
+		setContactCopied(true);
+	};
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			setContactCopied(false);
+		}, 2000);
+
+		return () => {
+			clearTimeout(timeout);
+		};
+	}, [contactCopied]);
+
+	if (showContact) {
+		return (
+			<div className='flex bg-zinc-900 border-solid border-2 rounded-xl border-zinc-800 py-2 px-3 mt-3 mb-2 self-center justify-self-end justify-center items-center gap-2'>
+				<address className='text-sm text-zinc-300'>{contact}</address>
+				<button
+					className={`m-0 p-1 border border-solid  ${
+						!contactCopied
+							? "border-zinc-700"
+							: "border-transparent"
+					} text-zinc-500 hover:text-zinc-50`}
+					title='Copiar contato'
+					onClick={handleCopyContact}>
+					{contactCopied ? (
+						<BsCheck2
+							size={18}
+							className={"text-white"}
+						/>
+					) : (
+						<MdOutlineCopyAll size={18} />
+					)}
+				</button>
+			</div>
+		);
+	}
+	return (
+		<button
+			title='Ver informações de contato'
+			onClick={handleClickContact}
+			className='bg-green-700 hover:bg-green-800 py-2 px-3 mt-3 mb-2 self-center justify-self-end'>
+			Conectar!
+		</button>
+	);
+};
