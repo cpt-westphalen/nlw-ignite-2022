@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import { useModal } from "./utils/useModal";
 
 import logo from "./assets/logo.svg";
 
-import { GameList } from "./components/GameList";
 import { AddAdArea } from "./components/AddAdArea";
-import { AddAdModal } from "./components/AddAdModal";
+import { GameList } from "./components/GameList";
+import { Modal } from "./components/Modal";
 import { Spinner } from "./components/Spinner";
 
-import { Game } from "./types/types";
+import { Game } from "./types";
 
-import { mockList } from "./mockList";
-import { useModal } from "./utils/useModal";
-import { GameAdsModal } from "./components/GameAdsModal";
-import { Modal } from "./components/Modal";
+import { mockList } from "./utils/mockList";
 
 function App() {
 	const [modal, setModal] = useModal({ open: false, id: "" });

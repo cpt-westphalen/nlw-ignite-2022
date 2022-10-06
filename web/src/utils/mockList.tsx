@@ -1,4 +1,4 @@
-import { Game } from "./types/types";
+import { Game } from "../types";
 
 export const mockList: Game[] = [
 	{
@@ -22,7 +22,7 @@ export const mockList: Game[] = [
 				game: "1",
 				author: "Ciclano D'tal",
 				experience: 2,
-				contact: "test#0000",
+				contact: "test#1111",
 				days: [0, 0, 0, 0, 0, 0, 0],
 				time: { start: "", end: "" },
 				voice: true,
@@ -33,7 +33,7 @@ export const mockList: Game[] = [
 				game: "1",
 				author: "Beltrano",
 				experience: 0,
-				contact: "test#0000",
+				contact: "test#2222",
 				days: [0, 0, 3, 0, 5, 6, 7],
 				time: { start: "18:30", end: "22:00" },
 				voice: false,
@@ -44,7 +44,7 @@ export const mockList: Game[] = [
 				game: "1",
 				author: "Nome do Fulano",
 				experience: 2,
-				contact: "test#0000",
+				contact: "test#3333",
 				days: [0, 0, 3, 0, 5, 6, 7],
 				time: { start: "18:30", end: "22:00" },
 				voice: true,

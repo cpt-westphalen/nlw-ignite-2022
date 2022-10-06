@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ModalType, SetModalType } from "../types/types";
+import { ModalType, SetModalType } from "../types";
 
 export const useModal = ({ open, id }: ModalType) => {
 	const [modalOpen, setModalOpen] = useState(open);

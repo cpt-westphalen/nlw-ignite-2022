@@ -1,13 +1,8 @@
 import { useState } from "react";
-import { AddAdModalProps, ModalType } from "../../types/types";
+import { ModalProps } from "../../types";
 
-import { AddAdModal } from "../AddAdModal";
-import { GameAdsModal } from "../GameAdsModal";
-
-interface ModalProps {
-	modal: ModalType;
-	props: AddAdModalProps;
-}
+import { AddAdModal } from "./AddAdModal";
+import { GameAdsModal } from "./GameAdsModal";
 
 export const Modal = ({ modal, props }: ModalProps) => {
 	const [defaultGame, setDefaultGame] = useState<string>();

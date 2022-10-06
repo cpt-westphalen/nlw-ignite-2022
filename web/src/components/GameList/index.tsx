@@ -1,7 +1,7 @@
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
 
 import { GameCard } from "./GameCard";
-import { Game, Modal } from "../types/types";
+import { Game, SetModalType } from "../../types";
 import { ArrowButton } from "./ArrowButton";
 
 export const GameList = ({
@@ -9,7 +9,7 @@ export const GameList = ({
 	setModal,
 }: {
 	list: Game[];
-	setModal: (value: Modal) => void;
+	setModal: SetModalType;
 }) => {
 	const [overflowActive, setOverflowActive] = useState(false);
 	const [atListPosition, setAtListPosition] = useState<

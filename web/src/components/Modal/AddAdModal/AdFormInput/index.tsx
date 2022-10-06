@@ -6,13 +6,13 @@ import {
 	FieldErrorsImpl,
 } from "react-hook-form";
 
-import { BsJoystick } from "react-icons/bs";
-import { FaAngleDown } from "react-icons/fa";
+import { AdTypes, Game } from "../../../../types";
 
 import { GameSelector } from "./GameSelector";
 import { DayButton } from "./DayButton";
 
-import { AdTypes, Game } from "../types/types";
+import { BsJoystick } from "react-icons/bs";
+import { FaAngleDown } from "react-icons/fa";
 
 export const AdFormInput = ({
 	list,

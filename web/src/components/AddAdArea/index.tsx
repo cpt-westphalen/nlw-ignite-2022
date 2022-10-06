@@ -1,7 +1,7 @@
 import { RefObject } from "react";
 
 import MagnifyingGlassPlus from "../assets/MagnifyingGlassPlus.svg";
-import { SetModalType } from "../types/types";
+import { SetModalType } from "../../types";
 
 type AddAdAreaProps = {
 	setModal: SetModalType;

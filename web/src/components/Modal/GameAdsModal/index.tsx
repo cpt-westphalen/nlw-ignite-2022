@@ -4,15 +4,10 @@ import { TbDeviceGamepad2 } from "react-icons/tb";
 import { MdOutlineCopyAll } from "react-icons/md";
 import { BsCheck2 } from "react-icons/bs";
 
-import {
-	AdTypes,
-	Game,
-	GameAdsModalProps,
-	SetModalType,
-} from "../../types/types";
+import { AdTypes, Game, GameAdsModalProps, SetModalType } from "../../../types";
 
-import { mockList } from "../../mockList";
-import { Spinner } from "../Spinner";
+import { mockList } from "../../../utils/mockList";
+import { Spinner } from "../../Spinner";
 
 export const GameAdsModal = ({
 	setModal,

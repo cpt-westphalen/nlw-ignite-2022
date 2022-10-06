@@ -1,4 +1,4 @@
-import { Game } from "../types/types";
+import { Game } from "../../../types";
 
 export const GameCard = ({ game }: { game: Game }) => {
 	return (

@@ -1,4 +1,3 @@
-import { MouseEventHandler } from "react";
 import { HiChevronLeft } from "react-icons/hi";
 import { HiChevronRight } from "react-icons/hi";
 
@@ -7,7 +6,7 @@ const iconClassNames =
 
 type ArrowButtonProps = {
 	direction: "left" | "right";
-	onClick: MouseEventHandler;
+	onClick: React.MouseEventHandler;
 	disabled?: boolean;
 };
 
