@@ -1,16 +1,18 @@
-import { Game, SetModalType } from "../../../../types";
+import { Game } from "../../../../types";
 
 import { AdCard } from "./AdCard";
 
-export const AdsContent = ({
-	game,
-}: {
-	game: Game;
-	setModal: SetModalType;
-}) => {
+export const AdsContent = ({ game }: { game: Game }) => {
 	return (
-		<div className='flex flex-col gap-4 justify-center items-center'>
-			<div className='flex gap-4 items-center'>
+		<div
+			onKeyDown={(e) => {
+				if (e.shiftKey && e.key === "Tab") {
+					e.preventDefault();
+					e.stopPropagation(); // bug: this ain't stopping the bubbling on shift-tab to firstFocusableElement
+				}
+			}}
+			className='flex flex-col gap-4 justify-start items-center'>
+			<div className='flex self-start gap-4 items-center'>
 				<div
 					style={{ backgroundImage: `url('./${game.imgUrl}')` }}
 					className='overflow-clip bg-top flex-shrink-0 w-20 h-20 rounded-50 border-solid border-zinc-800 border-2'
@@ -29,7 +31,12 @@ export const AdsContent = ({
 			<div className='flex flex-row flex-shrink-0 gap-2 overflow-x-scroll max-w-2xl'>
 				{game.ads.length > 0 ? (
 					game.ads.map((ad) => {
-						return <AdCard ad={ad} />;
+						return (
+							<AdCard
+								key={`${ad.id}-key`}
+								ad={ad}
+							/>
+						);
 					})
 				) : (
 					<CreateAdFallback />

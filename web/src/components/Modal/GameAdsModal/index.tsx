@@ -16,7 +16,7 @@ export const GameAdsModal = ({
 	onCloseFocusRef,
 	setDefaultGame,
 }: GameAdsModalProps) => {
-	const firstFocusableElementRef = useRef<HTMLLabelElement>(null);
+	const firstFocusableElementRef = useRef<HTMLHeadingElement>(null);
 	const lastFocusableElementRef = useRef<HTMLButtonElement>(null);
 
 	const [game, setGame] = useState<Game>();
@@ -66,18 +66,13 @@ export const GameAdsModal = ({
 			<div
 				role='dialog'
 				aria-labelledby='modalTitle'
+				ref={firstFocusableElementRef}
+				tabIndex={0}
 				className='z-10 px-10 py-8 bg-[#2A2634] rounded-lg flex flex-col max-w-3xl gap-4 select-none'
 				onClick={(e) => {
 					e.stopPropagation();
 				}}>
-				{game ? (
-					<AdsContent
-						game={game}
-						setModal={setModal}
-					/>
-				) : (
-					<Spinner />
-				)}
+				{game ? <AdsContent game={game} /> : <Spinner />}
 
 				<div className='flex justify-end items-center gap-8'>
 					<button

@@ -41,7 +41,9 @@ export const AdCard = ({ ad }: { ad: AdTypes }) => {
 	}, [ad.createdAt]);
 
 	return (
-		<article className='flex flex-col flex-grow relative min-h-full w-64 my-2 py-3 px-4 flex-shrink-0 gap-2 rounded bg-zinc-900'>
+		<article
+			tabIndex={0}
+			className='flex flex-col flex-grow relative min-h-full w-64 my-2 py-3 px-4 flex-shrink-0 gap-2 rounded bg-zinc-900'>
 			{ad.createdAt && isRecent && (
 				<span className='absolute text-sm text-yellow-600 right-3'>
 					Novo!

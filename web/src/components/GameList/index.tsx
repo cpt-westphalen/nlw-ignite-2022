@@ -76,12 +76,16 @@ export const GameList = ({
 					className='max-w-7xl overflow-x-scroll flex gap-6 flex-grow-0 flex-shrink-0 container-snap'
 					ref={listAreaDiv}>
 					{list.map((g) => (
-						<div
-							className='hover:cursor-pointer'
-							onClick={() => handleCardClick(g.id)}
+						<button
+							tabIndex={0}
+							className='text-start font-normal rounded-none m-0 p-0 hover:cursor-pointer'
+							onClick={(e) => {
+								e.preventDefault();
+								handleCardClick(g.id);
+							}}
 							key={`${g.id}-anchor`}>
 							<GameCard game={g} />
-						</div>
+						</button>
 					))}
 				</div>
 				{overflowActive && !(atListPosition === "end") && (
