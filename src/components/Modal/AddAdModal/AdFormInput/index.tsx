@@ -1,4 +1,4 @@
-import { RefObject, useState } from "react";
+import { RefObject, useContext, useState } from "react";
 import {
 	useForm,
 	SubmitHandler,
@@ -7,6 +7,8 @@ import {
 } from "react-hook-form";
 
 import { AdTypes, Game } from "../../../../types";
+
+import { SetGamesContext } from "../../../../App";
 
 import { GameSelector } from "./GameSelector";
 import { DayButton } from "./DayButton";
@@ -31,13 +33,27 @@ export const AdFormInput = ({
 		formState: { errors },
 	} = useForm<AdTypes>();
 
+	const setGame = useContext(SetGamesContext);
+
 	const onSubmit: SubmitHandler<AdTypes> = (data: AdTypes) => {
-		const output = {
+		const output: AdTypes = {
 			...data,
-			id: Math.floor(Math.random() * 100),
+			id: Math.floor(Math.random() * 100).toString(),
+			createdAt: new Date().toISOString(),
 		};
 		if (!output.experience) output.experience = 0;
 		console.log(output);
+		setGame((state: Game[]) => {
+			const newArray = [...state];
+			const gameToAddAd = newArray.find(({ id }) => id === output.game);
+			if (gameToAddAd) {
+				gameToAddAd.ads.push(output);
+				return newArray;
+			} else {
+				console.error("No game was found with the current ID");
+				return state;
+			}
+		});
 	};
 
 	const [daysSelected, setDaysSelected] = useState([0, 0, 0, 0, 0, 0, 0]);

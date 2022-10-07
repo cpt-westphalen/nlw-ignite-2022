@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { useModal } from "./utils/useModal";
 
 import logo from "./assets/logo.svg";
@@ -12,10 +12,16 @@ import { Game } from "./types";
 
 import { mockList } from "./utils/mockList";
 
+export const SetGamesContext = createContext<
+	(s: Game[] | ((s: Game[]) => Game[])) => void
+>(() => {
+	console.error("ops, something went wrong");
+});
+
 function App() {
 	const [modal, setModal] = useModal({ open: false, id: "" });
 
-	const [gameList, setGameList] = useState<Game[]>([]);
+	const [games, setGames] = useState<Game[]>([]);
 
 	const openModalBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -23,40 +29,42 @@ function App() {
 		const fetchGameList = () => {
 			//this would be the external fetch
 			setTimeout(() => {
-				setGameList(mockList);
+				setGames(mockList);
 			}, 1500);
 		};
 		fetchGameList();
 	}, []);
 
 	return (
-		<div className='bg-[url("./assets/bg-galaxy.png")] bg-cover min-h-screen flex flex-col justify-center items-center font-inter'>
-			<div className='max-w-[1344px] flex flex-col items-center'>
-				<Logo />
-				<Heading />
+		<SetGamesContext.Provider value={setGames}>
+			<div className='bg-[url("./assets/bg-galaxy.png")] bg-cover min-h-screen flex flex-col justify-center items-center font-inter'>
+				<div className='max-w-[1344px] flex flex-col items-center'>
+					<Logo />
+					<Heading />
 
-				{gameList.length > 0 ? (
-					<GameList
-						list={gameList}
+					{games.length > 0 ? (
+						<GameList
+							list={games}
+							setModal={setModal}
+						/>
+					) : (
+						<Spinner />
+					)}
+					<AddAdArea
 						setModal={setModal}
+						btnRef={openModalBtnRef}
 					/>
-				) : (
-					<Spinner />
-				)}
-				<AddAdArea
-					setModal={setModal}
-					btnRef={openModalBtnRef}
+				</div>
+				<Modal
+					modal={modal}
+					props={{
+						list: games,
+						setModal: setModal,
+						onCloseFocusRef: openModalBtnRef,
+					}}
 				/>
 			</div>
-			<Modal
-				modal={modal}
-				props={{
-					list: gameList,
-					setModal: setModal,
-					onCloseFocusRef: openModalBtnRef,
-				}}
-			/>
-		</div>
+		</SetGamesContext.Provider>
 	);
 }
 
