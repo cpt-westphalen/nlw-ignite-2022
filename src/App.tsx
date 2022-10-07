@@ -30,7 +30,7 @@ function App() {
 	}, []);
 
 	return (
-		<div className='bg-galaxy bg-cover min-h-screen flex flex-col justify-center items-center font-inter'>
+		<div className='bg-[url("./assets/bg-galaxy.png")] bg-cover min-h-screen flex flex-col justify-center items-center font-inter'>
 			<div className='max-w-[1344px] flex flex-col items-center'>
 				<Logo />
 				<Heading />
