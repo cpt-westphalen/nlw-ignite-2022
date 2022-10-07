@@ -40,6 +40,19 @@ export const AdCard = ({ ad }: { ad: AdTypes }) => {
 		}
 	}, [ad.createdAt]);
 
+	const adDaysToString = useMemo(() => {
+		const eachToString = (d: number) => {
+			// ad.days = [1 | 0, 2 | 0, 3 | 0, 4 | 0, 5 | 0, 6 | 0, 7 | 0];
+			const dayString =
+				d == 0 ? "" : d == 1 ? "dom." : d == 7 ? "sáb." : `${d}ª`;
+			return dayString;
+		};
+		return ad.days
+			.filter((d) => d !== 0)
+			.map(eachToString)
+			.join(", ");
+	}, [ad.days]);
+
 	return (
 		<article
 			tabIndex={0}
@@ -67,23 +80,7 @@ export const AdCard = ({ ad }: { ad: AdTypes }) => {
 				Disponibilidade
 				<p className='text-base text-white'>
 					{ad.days.filter((n) => n !== 0).length > 0
-						? ad.days.map((d) => {
-								let days = "";
-								days +=
-									d !== 0
-										? d == 7
-											? "sáb."
-											: d == 1
-											? "dom."
-											: `${d}ª`
-										: "";
-								if (days) {
-									const isLastDay =
-										d === ad.days[ad.days.length - 1];
-									days += isLastDay ? "" : ", ";
-								}
-								return days;
-						  })
+						? adDaysToString
 						: "Não informado"}
 				</p>
 			</label>
