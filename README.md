@@ -1,6 +1,6 @@
 # Next Level Week (Rocketseat) Set. 2022
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/67e4d318-3a4d-4236-af90-a840c4854566/deploy-status)](https://app.netlify.com/sites/find-your-duo-nlw-2022/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/67e4d318-3a4d-4236-af90-a840c4854566/deploy-status)](https://find-your-duo-nlw-2022.netlify.app/)
 
 ## Find your Duo
 
