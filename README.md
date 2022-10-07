@@ -1,5 +1,7 @@
 # Next Level Week (Rocketseat) Set. 2022
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/67e4d318-3a4d-4236-af90-a840c4854566/deploy-status)](https://app.netlify.com/sites/find-your-duo-nlw-2022/deploys)
+
 ## Find your Duo
 
 Find Your Duo é uma plataforma para encontrar uma pessoa parceira para jogar. O conceito e o design foi apresentado pela Rocketseat na NLW de setembro de 2022.
