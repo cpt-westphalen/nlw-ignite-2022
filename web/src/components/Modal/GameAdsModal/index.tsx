@@ -1,13 +1,14 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { TbDeviceGamepad2 } from "react-icons/tb";
-import { MdOutlineCopyAll } from "react-icons/md";
-import { BsCheck2 } from "react-icons/bs";
+import { Game, GameAdsModalProps } from "../../../types";
 
-import { AdTypes, Game, GameAdsModalProps, SetModalType } from "../../../types";
+import { AdsContent } from "./AdsContent";
+import { Spinner } from "../../Spinner";
 
 import { mockList } from "../../../utils/mockList";
-import { Spinner } from "../../Spinner";
+import { createFocusTrap } from "../../../utils/focusTrap";
+
+import { TbDeviceGamepad2 } from "react-icons/tb";
 
 export const GameAdsModal = ({
 	setModal,
@@ -32,30 +33,14 @@ export const GameAdsModal = ({
 	};
 
 	useEffect(() => {
-		const handleShiftTab = (event: KeyboardEvent) => {
-			if (event.shiftKey && event.key === "Tab") {
-				event.preventDefault();
-				lastFocusableElementRef.current?.focus();
-			}
-		};
+		const clearFocusTrap = createFocusTrap(
+			firstFocusableElementRef,
+			lastFocusableElementRef
+		);
 		const handleEsc = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
 				closeModal();
 			}
-		};
-
-		const focusTrap = () => {
-			firstFocusableElementRef.current?.focus();
-			firstFocusableElementRef.current?.addEventListener(
-				"keydown",
-				handleShiftTab
-			);
-		};
-		const clearFocusTrap = () => {
-			firstFocusableElementRef.current?.removeEventListener(
-				"keydown",
-				handleShiftTab
-			);
 		};
 		const fetchGameData = (id: string) => {
 			// this is where we would hit the backend for only this game ads, but here the data is all in one place
@@ -64,7 +49,6 @@ export const GameAdsModal = ({
 			else console.warn("Erro na ID do jogo");
 		};
 
-		focusTrap();
 		document.addEventListener("keyup", handleEsc);
 		fetchGameData(gameId);
 
@@ -111,204 +95,5 @@ export const GameAdsModal = ({
 				</div>
 			</div>
 		</div>
-	);
-};
-
-const AdsContent = ({ game }: { game: Game; setModal: SetModalType }) => {
-	return (
-		<div className='flex flex-col gap-4 justify-center items-center'>
-			<div className='flex gap-4 items-center'>
-				<div
-					style={{ backgroundImage: `url('./${game.imgUrl}')` }}
-					className='overflow-clip bg-top flex-shrink-0 w-20 h-20 rounded-50 border-solid border-zinc-800 border-2'
-				/>
-				<div>
-					<h2
-						className='font-black text-4xl mb-0'
-						id='modalTitle'>
-						{game.title}
-					</h2>
-					<p className='text-zinc-400 text-lg'>
-						Conecte-se e comece a jogar!
-					</p>
-				</div>
-			</div>
-			<div className='flex flex-row flex-shrink-0 gap-2 overflow-x-scroll max-w-2xl'>
-				{game.ads.length > 0 ? (
-					game.ads.map((ad) => {
-						return <AdCard ad={ad} />;
-					})
-				) : (
-					<CreateAdFallback />
-				)}
-			</div>
-		</div>
-	);
-};
-
-const AdCard = ({ ad }: { ad: AdTypes }) => {
-	const isRecent = useMemo(() => {
-		// checks if ad was placed less than N days ago.
-		if (ad.createdAt) {
-			const NUM_OF_DAYS = 7;
-			const now = new Date();
-
-			const today = [
-				now.getFullYear(),
-				now.getMonth() + 1,
-				now.getDate(),
-			];
-			const compareDate = ad.createdAt
-				.split(/\D/)
-				.map((v) => parseInt(v));
-
-			const result = () => {
-				if (today[0] === compareDate[0]) {
-					if (today[1] === compareDate[1]) {
-						return today[2] - compareDate[2] < NUM_OF_DAYS;
-					} else if (today[1] - compareDate[1] === 1) {
-						return today[2] + 30 - compareDate[2] < NUM_OF_DAYS;
-					}
-				} else if (today[0] - compareDate[0] === 1) {
-					if (today[1] + 12 - compareDate[1] <= 1) {
-						return today[2] + 30 - compareDate[2] < NUM_OF_DAYS;
-					}
-				}
-				return false;
-			};
-			return result();
-		} else {
-			return false;
-		}
-	}, [ad.createdAt]);
-
-	return (
-		<article className='flex flex-col flex-grow relative min-h-full w-64 my-2 py-3 px-4 flex-shrink-0 gap-2 rounded bg-zinc-900'>
-			{ad.createdAt ? (
-				isRecent ? (
-					<span className='absolute text-sm text-yellow-600 right-3'>
-						Novo!
-					</span>
-				) : (
-					""
-				)
-			) : (
-				""
-			)}
-			<label className='block text-sm text-zinc-400'>
-				Nome
-				<p className='text-base text-white'>{ad.author}</p>
-			</label>
-			<label className='block text-sm text-zinc-400'>
-				Experiência de jogo
-				<p className='text-base text-white'>
-					{ad.experience == 0
-						? "< 1 ano"
-						: `${ad.experience} ano${
-								ad.experience === 1 ? "" : "s"
-						  }`}
-				</p>
-			</label>
-			<label className='block text-sm text-zinc-400'>
-				Disponibilidade
-				<p className='text-base text-white'>
-					{ad.days.filter((n) => n !== 0).length > 0
-						? ad.days.map((d) => {
-								let days = "";
-								days +=
-									d !== 0
-										? d == 7
-											? "sáb."
-											: d == 1
-											? "dom."
-											: `${d}ª`
-										: "";
-								if (days) {
-									const isLastDay =
-										d === ad.days[ad.days.length - 1];
-									days += isLastDay ? "" : ", ";
-								}
-								return days;
-						  })
-						: "Não informado"}
-				</p>
-			</label>
-			<label className='block text-sm text-zinc-400'>
-				Chamada de Áudio
-				<p
-					className={`text-base ${
-						ad.voice ? "text-green-600 font-bold" : "text-white"
-					}`}>
-					{ad.voice ? "sim" : "não"}
-				</p>
-			</label>
-			<ContactButton contact={ad.contact} />
-		</article>
-	);
-};
-
-const CreateAdFallback = () => (
-	<div className='flex flex-col items-center gap-3 my-10 mx-3'>
-		<p>{"Não foram encontrados anúncios para este jogo."}</p>
-		<p>{"Deseja criar um novo anúncio?"}</p>
-	</div>
-);
-
-const ContactButton = ({ contact }: { contact: string }) => {
-	const [showContact, setShowContact] = useState(false);
-	const [contactCopied, setContactCopied] = useState(false);
-
-	const handleClickContact = (e: React.MouseEvent<HTMLButtonElement>) => {
-		setShowContact(true);
-	};
-
-	const handleCopyContact = (e: React.MouseEvent<HTMLButtonElement>) => {
-		navigator.clipboard.writeText(contact).then(() => {
-			console.log("copied!");
-		});
-		setContactCopied(true);
-	};
-
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			setContactCopied(false);
-		}, 2000);
-
-		return () => {
-			clearTimeout(timeout);
-		};
-	}, [contactCopied]);
-
-	if (showContact) {
-		return (
-			<div className='flex bg-zinc-900 border-solid border-2 rounded-xl border-zinc-800 py-2 px-3 mt-3 mb-2 self-center justify-self-end justify-center items-center gap-2'>
-				<address className='text-sm text-zinc-300'>{contact}</address>
-				<button
-					className={`m-0 p-1 border border-solid  ${
-						!contactCopied
-							? "border-zinc-700"
-							: "border-transparent"
-					} text-zinc-500 hover:text-zinc-50`}
-					title='Copiar contato'
-					onClick={handleCopyContact}>
-					{contactCopied ? (
-						<BsCheck2
-							size={18}
-							className={"text-white"}
-						/>
-					) : (
-						<MdOutlineCopyAll size={18} />
-					)}
-				</button>
-			</div>
-		);
-	}
-	return (
-		<button
-			title='Ver informações de contato'
-			onClick={handleClickContact}
-			className='bg-green-700 hover:bg-green-800 py-2 px-3 mt-3 mb-2 self-center justify-self-end'>
-			Conectar!
-		</button>
 	);
 };

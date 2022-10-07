@@ -5,6 +5,7 @@ import { AddAdModalProps } from "../../../types";
 import { AdFormInput } from "./AdFormInput";
 
 import { TbDeviceGamepad2 } from "react-icons/tb";
+import { createFocusTrap } from "../../../utils/focusTrap";
 
 export const AddAdModal = ({
 	setModal,
@@ -21,35 +22,15 @@ export const AddAdModal = ({
 	}
 
 	useEffect(() => {
-		const handleShiftTab = (event: KeyboardEvent) => {
-			if (event.shiftKey && event.key === "Tab") {
-				event.preventDefault();
-				lastFocusableElementRef.current?.focus();
-			}
-		};
+		const clearFocusTrap = createFocusTrap(
+			firstFocusableElementRef,
+			lastFocusableElementRef
+		);
 		const handleEsc = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
 				closeModal();
 			}
 		};
-
-		const focusTrap = () => {
-			firstFocusableElementRef.current?.focus();
-			firstFocusableElementRef.current?.addEventListener(
-				"keydown",
-				handleShiftTab
-			);
-		};
-		const clearFocusTrap = () => {
-			firstFocusableElementRef.current?.removeEventListener(
-				"keydown",
-				handleShiftTab
-			);
-		};
-
-		focusTrap();
-		document.addEventListener("keyup", handleEsc);
-
 		return () => {
 			clearFocusTrap();
 			document.removeEventListener("keyup", handleEsc);
