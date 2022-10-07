@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from "react";
+import { useModal } from "./utils/useModal";
 
 import logo from "./assets/logo.svg";
 
-import { GameList } from "./components/GameList";
 import { AddAdArea } from "./components/AddAdArea";
-import { AddAdModal } from "./components/AddAdModal";
+import { GameList } from "./components/GameList";
+import { Modal } from "./components/Modal";
 import { Spinner } from "./components/Spinner";
 
 import { Game } from "./types";
 
-import { mockList } from "./mockList";
+import { mockList } from "./utils/mockList";
 
 function App() {
-	const [modalOpen, setModalOpen] = useState(false);
+	const [modal, setModal] = useModal({ open: false, id: "" });
+
 	const [gameList, setGameList] = useState<Game[]>([]);
 
 	const openModalBtnRef = useRef<HTMLButtonElement>(null);
@@ -34,22 +36,26 @@ function App() {
 				<Heading />
 
 				{gameList.length > 0 ? (
-					<GameList list={gameList} />
+					<GameList
+						list={gameList}
+						setModal={setModal}
+					/>
 				) : (
 					<Spinner />
 				)}
 				<AddAdArea
-					setModalOpen={setModalOpen}
+					setModal={setModal}
 					btnRef={openModalBtnRef}
 				/>
 			</div>
-			{modalOpen && (
-				<AddAdModal
-					setModalOpen={setModalOpen}
-					list={gameList}
-					onCloseFocusRef={openModalBtnRef}
-				/>
-			)}
+			<Modal
+				modal={modal}
+				props={{
+					list: gameList,
+					setModal: setModal,
+					onCloseFocusRef: openModalBtnRef,
+				}}
+			/>
 		</div>
 	);
 }

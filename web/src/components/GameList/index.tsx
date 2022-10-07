@@ -1,10 +1,16 @@
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
 
 import { GameCard } from "./GameCard";
-import { Game } from "../types";
+import { Game, SetModalType } from "../../types";
 import { ArrowButton } from "./ArrowButton";
 
-export const GameList = ({ list }: { list: Game[] }) => {
+export const GameList = ({
+	list,
+	setModal,
+}: {
+	list: Game[];
+	setModal: SetModalType;
+}) => {
 	const [overflowActive, setOverflowActive] = useState(false);
 	const [atListPosition, setAtListPosition] = useState<
 		"start" | "middle" | "end"
@@ -48,6 +54,10 @@ export const GameList = ({ list }: { list: Game[] }) => {
 		}
 	};
 
+	const handleCardClick = (id: string) => {
+		setModal({ open: true, id: id });
+	};
+
 	return (
 		<div className='flex gap-6 flex-grow-0'>
 			<ArrowButton
@@ -66,14 +76,16 @@ export const GameList = ({ list }: { list: Game[] }) => {
 					className='max-w-7xl overflow-x-scroll flex gap-6 flex-grow-0 flex-shrink-0 container-snap'
 					ref={listAreaDiv}>
 					{list.map((g) => (
-						<a
-							href='#'
+						<button
+							tabIndex={0}
+							className='text-start font-normal rounded-none m-0 p-0 hover:cursor-pointer'
+							onClick={(e) => {
+								e.preventDefault();
+								handleCardClick(g.id);
+							}}
 							key={`${g.id}-anchor`}>
-							<GameCard
-								game={g}
-								key={g.id}
-							/>
-						</a>
+							<GameCard game={g} />
+						</button>
 					))}
 				</div>
 				{overflowActive && !(atListPosition === "end") && (

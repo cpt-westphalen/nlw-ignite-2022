@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useState } from "react";
 import {
 	useForm,
 	SubmitHandler,
@@ -6,20 +6,22 @@ import {
 	FieldErrorsImpl,
 } from "react-hook-form";
 
-import { BsJoystick } from "react-icons/bs";
-import { FaAngleDown } from "react-icons/fa";
+import { AdTypes, Game } from "../../../../types";
 
 import { GameSelector } from "./GameSelector";
 import { DayButton } from "./DayButton";
 
-import { AdTypes, Game } from "../types";
+import { BsJoystick } from "react-icons/bs";
+import { FaAngleDown } from "react-icons/fa";
 
 export const AdFormInput = ({
 	list,
 	firstFocusableElementRef,
+	defaultGame,
 }: {
 	list: Game[];
 	firstFocusableElementRef: RefObject<HTMLLabelElement>;
+	defaultGame?: string;
 }) => {
 	const {
 		register,
@@ -59,10 +61,14 @@ export const AdFormInput = ({
 				Qual o game?
 				<Controller
 					name='game'
+					defaultValue={defaultGame}
 					control={control}
 					rules={{ required: "É necessário informar um jogo." }}
-					render={({ field: { name, ref, onChange, onBlur } }) => (
+					render={({
+						field: { name, ref, onChange, onBlur, value },
+					}) => (
 						<GameSelector.Root
+							defaultValue={value}
 							name={name}
 							onValueChange={onChange}>
 							<GameSelector.Trigger
@@ -240,15 +246,3 @@ const Errors = ({ errors }: { errors: FieldErrorsImpl<AdTypes> }) => {
 		</div>
 	);
 };
-
-const uncontrolledSelector = (
-	<select
-		name='game'
-		id='adGameInput'
-		placeholder='Selecione o game que deseja jogar'>
-		<option>League of Legends</option>
-		<option>Dota 2</option>
-		<option>CS:GO</option>
-		<option>Apex Legends</option>
-	</select>
-);
