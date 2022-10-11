@@ -10,8 +10,9 @@ import { AdTypes, Game } from "../../../../types";
 
 import { SetGamesContext } from "../../../../App";
 
-import { GameSelector } from "./GameSelector";
 import { DayButton } from "./DayButton";
+import { GameSelector } from "./GameSelector";
+import { ToastContext } from "../Toast";
 
 import { BsJoystick } from "react-icons/bs";
 import { FaAngleDown } from "react-icons/fa";
@@ -20,10 +21,12 @@ export const AdFormInput = ({
 	list,
 	firstFocusableElementRef,
 	defaultGame,
+	closeModal,
 }: {
 	list: Game[];
 	firstFocusableElementRef: RefObject<HTMLLabelElement>;
 	defaultGame?: string;
+	closeModal: () => void;
 }) => {
 	const {
 		register,
@@ -34,11 +37,12 @@ export const AdFormInput = ({
 	} = useForm<AdTypes>();
 
 	const setGame = useContext(SetGamesContext);
+	const { setToast, setOpen } = useContext(ToastContext);
 
 	const onSubmit: SubmitHandler<AdTypes> = (data: AdTypes) => {
 		const output: AdTypes = {
 			...data,
-			id: Math.floor(Math.random() * 100).toString(),
+			id: Math.floor(Math.random() * 1000).toString(),
 			createdAt: new Date().toISOString(),
 		};
 		if (!output.experience) output.experience = 0;
@@ -54,6 +58,14 @@ export const AdFormInput = ({
 				return state;
 			}
 		});
+		setTimeout(() => {
+			setToast({
+				title: "Uhu, funcionou!",
+				desc: "Anúncio criado com sucesso.",
+			});
+			setOpen(true);
+		}, 150);
+		closeModal();
 	};
 
 	const [daysSelected, setDaysSelected] = useState([0, 0, 0, 0, 0, 0, 0]);

@@ -58,6 +58,7 @@ export const AddAdModal = ({
 					list={list}
 					firstFocusableElementRef={firstFocusableElementRef}
 					defaultGame={defaultGame}
+					closeModal={closeModal}
 				/>
 				<div className='flex justify-end items-center gap-8'>
 					<button

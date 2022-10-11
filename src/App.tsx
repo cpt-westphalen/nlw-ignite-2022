@@ -1,4 +1,11 @@
-import { createContext, useEffect, useRef, useState } from "react";
+import {
+	createContext,
+	useContext,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { useModal } from "./utils/useModal";
 
 import logo from "./assets/logo.svg";
@@ -7,8 +14,13 @@ import { AddAdArea } from "./components/AddAdArea";
 import { GameList } from "./components/GameList";
 import { Modal } from "./components/Modal";
 import { Spinner } from "./components/Spinner";
+import {
+	Toast,
+	ToastContext,
+	ToastProvider,
+} from "./components/Modal/AddAdModal/Toast";
 
-import { Game } from "./types";
+import { Game, ToastContextTypes } from "./types";
 
 import { mockList } from "./utils/mockList";
 
@@ -20,6 +32,13 @@ export const SetGamesContext = createContext<
 
 function App() {
 	const [modal, setModal] = useModal({ open: false, id: "" });
+
+	const toastContext = useContext(ToastContext); // if default is wanted
+	const [toast, setToast] = useState(toastContext.toast);
+	const [openToast, setOpenToast] = useState(toastContext.open);
+	const toastMemo: ToastContextTypes = useMemo(() => {
+		return { toast, setToast, open: openToast, setOpen: setOpenToast };
+	}, [openToast, toast]);
 
 	const [games, setGames] = useState<Game[]>([]);
 
@@ -37,33 +56,36 @@ function App() {
 
 	return (
 		<SetGamesContext.Provider value={setGames}>
-			<div className='bg-[url("./assets/bg-galaxy.png")] bg-cover min-h-screen flex flex-col justify-center items-center font-inter'>
-				<div className='max-w-[1344px] flex flex-col items-center'>
-					<Logo />
-					<Heading />
+			<ToastProvider toastContext={toastMemo}>
+				<div className='bg-[url("./assets/bg-galaxy.png")] bg-cover min-h-screen flex flex-col justify-center items-center font-inter'>
+					<div className='max-w-[1344px] flex flex-col items-center'>
+						{openToast && <Toast />}
+						<Logo />
+						<Heading />
 
-					{games.length > 0 ? (
-						<GameList
-							list={games}
+						{games.length > 0 ? (
+							<GameList
+								list={games}
+								setModal={setModal}
+							/>
+						) : (
+							<Spinner />
+						)}
+						<AddAdArea
 							setModal={setModal}
+							btnRef={openModalBtnRef}
 						/>
-					) : (
-						<Spinner />
-					)}
-					<AddAdArea
-						setModal={setModal}
-						btnRef={openModalBtnRef}
+					</div>
+					<Modal
+						modal={modal}
+						props={{
+							list: games,
+							setModal: setModal,
+							onCloseFocusRef: openModalBtnRef,
+						}}
 					/>
 				</div>
-				<Modal
-					modal={modal}
-					props={{
-						list: games,
-						setModal: setModal,
-						onCloseFocusRef: openModalBtnRef,
-					}}
-				/>
-			</div>
+			</ToastProvider>
 		</SetGamesContext.Provider>
 	);
 }
