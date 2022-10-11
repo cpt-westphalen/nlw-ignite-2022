@@ -44,3 +44,18 @@ export type GameAdsModalProps = {
 	onCloseFocusRef?: React.RefObject<HTMLButtonElement>;
 	setDefaultGame: (value: string | undefined) => void;
 }
+
+export type ToastContextTypes = {
+	toast: ToastTypes;
+	open: boolean;
+	setOpen: (value: boolean) => void;
+	setToast: (value: ToastTypes) => void;
+};
+
+export type ToastTypes = {
+	title: string;
+	desc: string;
+	action?: string;
+	actionAlt?: string;
+	onClick?: React.MouseEventHandler;
+};

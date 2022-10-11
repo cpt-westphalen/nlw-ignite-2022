@@ -20,6 +20,20 @@ module.exports = {
       },
       borderRadius: {
         '50': '50%'
+      },
+      animation: {
+        'fadein-top': 'fade 0.2s ease-out 1 forwards',
+        'slidein-top': 'slide 0.4s ease-out 1 forwards'
+      },
+      keyframes: {
+        fade: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1'}
+        },
+        slide: {
+          '0%': { transform: 'translateY(-35%)' },
+          '100%': { transform: 'translateY(0)' },
+        }
       }
     },
   },
