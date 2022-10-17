@@ -28,7 +28,7 @@ export const AdsContent = ({ game }: { game: Game }) => {
 					</p>
 				</div>
 			</div>
-			<div className='flex flex-row flex-shrink-0 gap-2 overflow-x-scroll max-w-2xl'>
+			<div className='flex flex-row flex-shrink-0 gap-2 overflow-x-auto overflow-y-hidden max-w-2xl h-max'>
 				{game.ads.length > 0 ? (
 					game.ads.map((ad) => {
 						return (
