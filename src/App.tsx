@@ -14,11 +14,7 @@ import { AddAdArea } from "./components/AddAdArea";
 import { GameList } from "./components/GameList";
 import { Modal } from "./components/Modal";
 import { Spinner } from "./components/Spinner";
-import {
-	Toast,
-	ToastContext,
-	ToastProvider,
-} from "./components/Modal/AddAdModal/Toast";
+import { Toast, ToastContext, ToastProvider } from "./components/Toast";
 
 import { Game, ToastContextTypes } from "./types";
 
@@ -57,7 +53,7 @@ function App() {
 	return (
 		<SetGamesContext.Provider value={setGames}>
 			<ToastProvider toastContext={toastMemo}>
-				<div className='bg-[url("./assets/bg-galaxy.png")] bg-cover min-h-screen flex flex-col justify-center items-center font-inter'>
+				<div className='bg-[url("./assets/bg-galaxy.png")] bg-cover min-h-screen overflow-x-hidden overflow-y-auto flex flex-col justify-center items-center font-inter'>
 					<div className='max-w-[1344px] flex flex-col items-center'>
 						{openToast && <Toast />}
 						<Logo />

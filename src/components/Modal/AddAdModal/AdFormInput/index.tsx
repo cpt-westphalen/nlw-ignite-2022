@@ -12,7 +12,7 @@ import { SetGamesContext } from "../../../../App";
 
 import { DayButton } from "./DayButton";
 import { GameSelector } from "./GameSelector";
-import { ToastContext } from "../Toast";
+import { ToastContext } from "../../../Toast";
 
 import { BsJoystick } from "react-icons/bs";
 import { FaAngleDown } from "react-icons/fa";
@@ -221,11 +221,12 @@ export const AdFormInput = ({
 					</div>
 				</label>
 			</div>
-			<label className='flex gap-2 items-center font-semibold text-base mb-2 hover:cursor-pointer'>
+			<label className='flex gap-2 justify-center items-center font-semibold text-base group hover:cursor-pointer'>
 				<input
+					className='bg-zinc-900 group-hover:cursor-pointer'
 					type='checkbox'
 					{...register("voice")}
-				/>{" "}
+				/>
 				Costumo me conectar ao chat de voz
 			</label>
 			<Errors errors={errors} />

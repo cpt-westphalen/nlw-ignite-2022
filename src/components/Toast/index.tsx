@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect } from "react";
 
 import * as ToastPrimitive from "@radix-ui/react-toast";
 
-import { ToastContextTypes, ToastTypes } from "../../../../types";
+import { ToastContextTypes, ToastTypes } from "../../types";
 
 export const ToastContext = createContext<ToastContextTypes>({
 	toast: {
