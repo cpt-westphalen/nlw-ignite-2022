@@ -82,7 +82,7 @@ export const AdFormInput = ({
 			})}
 			name='adInput'
 			id='adFormInput'
-			className='flex flex-col gap-3 font-medium'>
+			className='flex flex-col gap-1 sm:gap-3 font-medium'>
 			<label
 				className='flex flex-col gap-1 font-semibold text-base mb-2'
 				ref={firstFocusableElementRef}>
@@ -134,7 +134,7 @@ export const AdFormInput = ({
 					})}
 				/>
 			</label>
-			<div className='flex gap-6'>
+			<div className='flex flex-col gap-1 sm:flex-row sm:gap-6'>
 				<label className='flex flex-col gap-1 font-semibold text-base mb-2'>
 					Joga há quantos anos?
 					<input
@@ -162,7 +162,7 @@ export const AdFormInput = ({
 					/>
 				</label>
 			</div>
-			<div className='flex gap-2 justify-between'>
+			<div className='flex flex-col gap-1 sm:flex-row sm:gap-2 sm:justify-between'>
 				<div className='flex flex-col gap-1 font-semibold text-base mb-2'>
 					<label id='dayInput'>Quando costuma jogar?</label>
 					<div className='flex gap-1 flex-wrap'>
@@ -221,7 +221,7 @@ export const AdFormInput = ({
 					</div>
 				</label>
 			</div>
-			<label className='flex gap-2 justify-center items-center font-semibold text-base group hover:cursor-pointer'>
+			<label className='flex gap-2 sm:justify-center sm:items-center sm:font-semibold text-sm sm:text-base group hover:cursor-pointer'>
 				<input
 					className='bg-zinc-900 group-hover:cursor-pointer'
 					type='checkbox'
