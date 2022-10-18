@@ -53,6 +53,9 @@ export const AdCard = ({ ad }: { ad: AdTypes }) => {
 			.join(", ");
 	}, [ad.days]);
 
+	const adTimes =
+		ad.time.start && ad.time.end ? `, ${ad.time.start}-${ad.time.end}` : "";
+
 	return (
 		<article
 			tabIndex={0}
@@ -80,7 +83,7 @@ export const AdCard = ({ ad }: { ad: AdTypes }) => {
 				Disponibilidade
 				<p className='text-base text-white'>
 					{ad.days.filter((n) => n !== 0).length > 0
-						? adDaysToString
+						? `${adDaysToString}${adTimes}`
 						: "Não informado"}
 				</p>
 			</label>
