@@ -53,8 +53,8 @@ function App() {
 	return (
 		<SetGamesContext.Provider value={setGames}>
 			<ToastProvider toastContext={toastMemo}>
-				<div className='bg-[url("./assets/bg-galaxy.png")] bg-cover min-h-screen overflow-x-hidden overflow-y-auto flex flex-col justify-center items-center font-inter'>
-					<div className='max-w-[1344px] flex flex-col items-center'>
+				<div className='bg-[url("./assets/bg-galaxy.png")] bg-cover min-h-screen overflow-x-hidden overflow-y-auto flex flex-col justify-start items-center font-inter'>
+					<div className='2xl:max-w-[1344px] max-w-[90%] flex flex-col items-center'>
 						{openToast && <Toast />}
 						<Logo />
 						<Heading />
@@ -91,13 +91,14 @@ const Logo = () => {
 		<img
 			src={logo}
 			alt='NLW eSport Logo'
+			className='xs:w-72 w-[70vw] mt-16 lg:mt-20'
 		/>
 	);
 };
 
 const Heading = () => {
 	return (
-		<h1 className='mt-[80px] mb-16 text-6xl font-black'>
+		<h1 className='my-12 lg:text-6xl sm:text-5xl text-4xl font-black'>
 			Seu{" "}
 			<span className='bg-gradient-theme bg-clip-text text-transparent'>
 				duo

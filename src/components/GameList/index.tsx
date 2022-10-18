@@ -59,7 +59,7 @@ export const GameList = ({
 	};
 
 	return (
-		<div className='flex gap-6 flex-grow-0'>
+		<div className='flex 2xl:gap-6 2xl:flex-grow-0'>
 			<ArrowButton
 				direction='left'
 				onClick={handleClickLeft}
@@ -73,7 +73,7 @@ export const GameList = ({
 			/>
 			<div className='relative'>
 				<div
-					className='max-w-7xl overflow-x-scroll flex gap-6 flex-grow-0 flex-shrink-0 container-snap'
+					className='2xl:max-w-7xl max-w-[90vw] overflow-x-scroll flex gap-6 flex-grow-0 flex-shrink-0 container-snap'
 					ref={listAreaDiv}>
 					{list.map((g) => (
 						<button
