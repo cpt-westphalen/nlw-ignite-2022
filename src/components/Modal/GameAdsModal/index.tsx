@@ -62,19 +62,19 @@ export const GameAdsModal = ({
 		<div
 			tabIndex={-1}
 			onClick={closeModal}
-			className='bg-black bg-opacity-90 fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col justify-center items-center'>
+			className='bg-black bg-opacity-90 fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col justify-center sm:items-center'>
 			<div
 				role='dialog'
 				aria-labelledby='modalTitle'
 				ref={firstFocusableElementRef}
 				tabIndex={0}
-				className='z-10 px-10 py-8 bg-[#2A2634] rounded-lg flex flex-col max-w-3xl gap-4 select-none'
+				className='z-10 px-2 xs:px-4 xl:px-10 py-4 sm:py-8 bg-[#2A2634] rounded-lg flex flex-col max-w-[100vw] xl:max-w-3xl gap-4 select-none'
 				onClick={(e) => {
 					e.stopPropagation();
 				}}>
 				{game ? <AdsContent game={game} /> : <Spinner />}
 
-				<div className='flex justify-end items-center gap-8'>
+				<div className='flex justify-end items-center sm:gap-8'>
 					<button
 						className='hover:text-zinc-400'
 						onClick={closeModal}>
