@@ -17,7 +17,7 @@ Além de algumas decisões estéticas menores, criei um modal de visualização 
 ### Limitações do projeto
 
 -   Não tem backend. Os dados iniciais e a inserção de novos anúncios é simulada.
--   Não é mobile-first.
+-   ~~Não é mobile-first.~~ (Responsividade adicionada em 17/10/2022)
 -   Não tem testes.
 
 ### TypeScript
